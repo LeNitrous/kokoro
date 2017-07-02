@@ -1,0 +1,16 @@
+{
+	"token": "",
+	"osu_token": "1e715b09268989c4a8adac343ceee88a12f20fed",
+	"client_id": "248037460184006656",
+	"bot_version": "BETA 1.5",
+	"prefix": "]",
+	"ownerID": "170905486407761931",
+	"replySet": {
+		"noPermsUser": "No can do! You need permission to use this command.",
+		"noPermsBot": "Uh oh! Seems I don't have permission to do this.",
+		"shutdown": "Shutting down...",
+		"error": "Yikes! I've been hit. Please report this to my owner.",
+		"serverOnly": "Sorry! This can't be used in Direct Messages."
+	},
+	"maxShards": 1
+}
