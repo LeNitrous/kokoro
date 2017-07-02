@@ -2,7 +2,6 @@
   "name": "idol-bot",
   "version": "0.0.1",
   "description": "GBP, SIF and SS Bot",
-  "main": "bot.js",
   "dependencies": {
     "bufferutil": "^3.0.0",
     "chalk": "^1.1.3",
@@ -20,7 +19,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node Kokoro.js"
   },
   "keywords": [],
   "author": "Nitrous",
