@@ -12,11 +12,12 @@ module.exports = {
   run: (client, msg, args) => {
     let cmd = args[0];
     let sub = args[1];
+    var user = msg.author;
 
     // IF NONE
     if (!fs.existsSync(filepath + cmd) && !Boolean(cmd) || !isNaN(parseInt(cmd))) {
       if (!Boolean(cmd)) {cmd = 1};
-      util.sendcmdlist(msg, cmd, filepath, config.prefix);
+      util.sendcmdlist(msg, cmd, filepath, config.prefix, '', '', user);
       return;
     };
 
@@ -25,7 +26,7 @@ module.exports = {
       let f = require(`./${cmd}.js`)
       var u = Boolean(f.usage) ? f.usage : '';
       var h = Boolean(f.help) ? f.help : '';
-      util.sendcmdhelp(msg, cmd, config.prefix, h, u);
+      util.sendcmdhelp(msg, cmd, config.prefix, h, u, user);
       return;
     };
 
@@ -33,7 +34,7 @@ module.exports = {
     if (fs.existsSync(filepath + cmd) && !Boolean(sub) || !isNaN(parseInt(sub)) ) {
       if (!Boolean(sub)) {sub = 1};
       var f = fs.readFileSync(filepath + `${cmd}/${cmd}.txt`, 'utf8')
-      util.sendcmdlist(msg, sub, filepath + cmd, config.prefix, `${f} Command `, cmd);
+      util.sendcmdlist(msg, sub, filepath + cmd, config.prefix, `${f} Command `, cmd, user);
       return;
     };
 
@@ -42,7 +43,7 @@ module.exports = {
       let f = require(`./${cmd}/${sub}.js`)
       var u = Boolean(f.usage) ? f.usage : '';
       var h = Boolean(f.help) ? f.help : '';
-      util.sendcmdhelp(msg, `${cmd} ${sub}`, config.prefix, h, u);
+      util.sendcmdhelp(msg, `${cmd} ${sub}`, config.prefix, h, u, user);
       return;
     };
   }

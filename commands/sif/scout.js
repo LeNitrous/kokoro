@@ -56,7 +56,7 @@ module.exports = {
                         var card = item.body.results[0];
                         const show = new Discord.RichEmbed()
                             .setAuthor(`(${card.rarity}) ${card.idol.name}`, Constants[card.attribute].icon)
-                            .setFooter('Scouting Results')
+                            .setFooter(`${msg.member.displayName}'s scouting result.`)
                             .setColor(Constants[card.attribute].color);
                         if (card.card_image != null) {show.setImage(`http:${card.card_image}`)}
                         msg.channel.send({embed: show});
@@ -72,7 +72,6 @@ module.exports = {
             for (var i = 0; i < 11; i++) {
                 get.push(envelope.choose())
             }
-            console.log(get);
             get.forEach(i => {
                 var req = request.get('http://schoolido.lu/api/cards/');
                 query.page_size = 1;
@@ -84,10 +83,10 @@ module.exports = {
                 req.end((error, item) => {
                     if(!error && item.status === 200) {
                         var card = item.body.results[0];
-                        list.push(`#${card.id} **${card.rarity}** ${card.attribute} ${card.idol.name}`)
+                        list.push(`**${card.rarity}** ${card.attribute} ${card.idol.name} (#${card.id})`)
                         if (completed_requests++ == get.length -1) {
                             const show = new Discord.RichEmbed()
-                                .setTitle('Scouting Results')
+                                .setTitle(`${msg.member.displayName} scouted:`)
                                 .setDescription(list.join('\n'))
                                 .setColor([255, 125, 255]);
                             msg.channel.send({embed: show});

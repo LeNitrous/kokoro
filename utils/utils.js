@@ -2,9 +2,9 @@ const fs 	= require('fs'),
       path  = require('path');
 
 module.exports = {
-    sendcmdhelp: (msg, cmd, prefix, help, usage) => {
+    sendcmdhelp: (msg, cmd, prefix, help, usage, user) => {
         usage = usage || '';
-        msg.channel.send(`\`\`\`md\n# ${cmd}\n\t> ${help}\n\t> ${prefix}${cmd} ${usage}\`\`\``);
+        user.send(`\`\`\`md\n# ${cmd}\n\t> ${help}\n\t> ${prefix}${cmd} ${usage}\`\`\``);
     },
 
     listcmd: (page, path) => {
@@ -41,7 +41,8 @@ module.exports = {
         })
     },
 
-    sendcmdlist: (msg, page, path, prefix, h = '', sub = '') => {
-        msg.channel.send(`${h}Help List: Page ${page}\n===============================================================================\n${module.exports.listcmd(page, path)}\n"${prefix}help ${sub} <Command|Page>" to show how to use the command or scroll to next page.`, {code: 'md'});
+    sendcmdlist: (msg, page, path, prefix, h = '', sub = '', user) => {
+        //msg.channel.send(`${h}Help List: Page ${page}\n===============================================================================\n${module.exports.listcmd(page, path)}\n"${prefix}help ${sub} <Command|Page>" to show how to use the command or scroll to next page.`, {code: 'md'});
+        user.send(`${h}Help List: Page ${page}\n===============================================================================\n${module.exports.listcmd(page, path)}\n"${prefix}help ${sub} <Command|Page>" to show how to use the command or scroll to next page.`, {code: 'md'});
     }
 };

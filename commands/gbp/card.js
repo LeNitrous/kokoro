@@ -16,9 +16,9 @@ module.exports = {
                 .setTitle(`[${card.name}] ${Constants.Members[card.member]}`)
                 .setURL(`http://bandori.party/cards/${card.id}`)
                 .setThumbnail(card.image_trained)
-                .addField('Skill Type', card.i_skill_type)
+                .addField('Skill Type', card.i_skill_type, true)
                 .addField('Max Power', card.performance_trained_max + card.technique_trained_max + card.visual_trained_max, true)
-                .addField(card.skill_name, card.skill_details, true)
+                .addField(card.skill_name, card.skill_details)
                 .setColor([228, 0, 70]);
             msg.channel.send({embed: info});
         })

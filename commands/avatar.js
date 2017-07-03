@@ -7,9 +7,6 @@ module.exports = {
     run: (client, msg, args) => {
         var user        = msg.mentions.users.first() !== undefined ? msg.mentions.users.first() : msg.author;
         var userGuild   = msg.guild.member(user)
-        const embed = new Discord.RichEmbed()
-            .setTitle(`${userGuild.displayName}'s avatar`)
-            .setImage(user.avatarURL);
-        msg.channel.send({embed});
+        msg.channel.send('', {files: [{attachment: user.avatarURL, name: 'avatar.jpg'}]});
     }
 }
