@@ -2,6 +2,7 @@ const fs 		= require('fs'),
       util      = require('../utils/utils.js'),
       log   	= require('../utils/Logger.js'),
       list      = require('../data/warn.json'),
+      Discord	= require('discord.js'),
       config    = require('../config.json');
 
 module.exports = {
@@ -14,8 +15,16 @@ module.exports = {
         if (!args[0]) { util.sendcmdhelp(msg, 'warn', config.prefix, module.exports.help, module.exports.usage); return;}
 
         if (args[1] !== undefined) {
-            if (args[1].toLowerCase() == 'get') { msg.channel.send(`${msg.guild.member(user).displayName}'s warnings: **${(!list[msg.guild.id]) ? '0' : list[msg.guild.id][user.id] }**`); return; }
-            if (args[1].toLowerCase() == 'clear') { list[msg.guild.id][user.id] = 0; msg.channel.send(`${msg.guild.member(user).displayName}'s warnings have been cleared.`); SaveFile(); return; }
+            if (args[1].toLowerCase() == 'get') { 
+                const embed = new Discord.RichEmbed()
+                    .setAuthor(`${user.tag}`, user.displayAvatarURL)
+                    .setDescription(`**Warnings:** ${(!list[msg.guild.id]) ? '0' : list[msg.guild.id][user.id] }`)
+                    .setTimestamp(new Date())
+                    .setColor([255, 221, 8]);
+                msg.channel.send({embed});
+                return;
+            };
+            if (args[1].toLowerCase() == 'clear') { list[msg.guild.id][user.id] = 0; msg.channel.send(`${msg.guild.member(user).displayName}'s warnings have been cleared.`); SaveFile(); return };
             if (args[1].toLowerCase() == 'set') { 
                 if (!isNaN(parseInt(args[2]))) {
                     if (!list[msg.guild.id]) { list[msg.guild.id] = {};}

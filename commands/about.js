@@ -40,6 +40,6 @@ module.exports = {
 			\u2022 Channels: ${client.channels.filter(t => t.type == "text").size} text | ${client.channels.filter(t => t.type == "voice").size} voice
 			`, true)
 			.setFooter(`Created by ${client.users.find('id', config.ownerID).tag}`, client.users.find('id', config.ownerID).avatarURL);
-		msg.channel.send({embed});
+		msg.author.send({embed});
 	}
 };

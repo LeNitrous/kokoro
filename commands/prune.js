@@ -8,17 +8,17 @@ module.exports = {
     run: (client, msg, args) => {
         var user    = args[0];
         var num     = args[1];
-        if (!msg.guild.me.hasPermission("MANAGE_MESSAGES")) {msg.channel.send(config.replySet.noPermsBot); return;};
-        if (!msg.member.hasPermission("MANAGE_MESSAGES")) {msg.channel.send(config.replySet.noPermsUser); return;};
-        if (isNaN(num)) {msg.channel.send('Please specify the number of messages to delete.'); return;}
+        if (!msg.guild.me.hasPermission("MANAGE_MESSAGES")) {msg.channel.send(config.replySet.noPermsBot); return};
+        if (!msg.member.hasPermission("MANAGE_MESSAGES")) {msg.channel.send(config.replySet.noPermsUser); return};
+        if (isNaN(num)) {msg.channel.send('Specify the number of messages to delete.'); return;}
         if (user !== undefined) {
             if (user.toLowerCase() == 'bot') {
                 user = msg.guild.me.id
             } else if (user.startsWith('<@')) {
-                if (user.startsWith('<@&')) {msg.channel.send('Please mention a user.'); return;};
+                if (user.startsWith('<@&')) {msg.channel.send('Specify a user.'); return;};
                 user = msg.mentions.members.first().id
             } else {
-                msg.channel.send('Please provide a valid user.');
+                msg.channel.send('Specify a user.');
                 return;
             }
         }

@@ -9,6 +9,7 @@ module.exports = {
     run: (client, msg, args) => {
         var term = args.join();
         var r = [];
+        if(!Boolean(term)) {msg.channel.send('Specify an anime term to search!'); return};
         msg.channel.startTyping();
         mal.getResultsFromSearch(term).then(items => {
             var a = items.filter(i => {return i.type == 'anime';});

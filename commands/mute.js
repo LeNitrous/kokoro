@@ -10,10 +10,10 @@ module.exports = {
     run: (client, msg, args) => {
         var user      = msg.mentions.users.first();
         var isVoice   = args[1];
-        if (!msg.guild.me.hasPermission("MANAGE_CHANNELS")) {msg.channel.send(config.replySet.noPermsBot); return;};
-        if (!msg.member.hasPermission("MANAGE_CHANNELS")) {msg.channel.send(config.replySet.noPermsUser); return;};
-        if (args[0] === undefined) {util.sendcmdhelp(msg, 'mute', config.prefix, module.exports.help, module.exports.usage); return;}
-        if (user.id == msg.client.user.id) {msg.channel.send('You can\'t mute me!'); return;};
+        if (!msg.guild.me.hasPermission("MANAGE_CHANNELS")) {msg.channel.send(config.replySet.noPermsBot); return};
+        if (!msg.member.hasPermission("MANAGE_CHANNELS")) {msg.channel.send(config.replySet.noPermsUser); return};
+        if (user === undefined) {msg.channel.send('Specify a user to mute.'); return}
+        if (user.id == msg.client.user.id) {msg.channel.send('You can\'t mute me!'); return};
         if (!list[msg.guild.id]) {list[msg.guild.id] = [];}
         if (!list[msg.guild.id].includes(user.id)) {list[msg.guild.id].push(user.id);}
         else {
@@ -25,31 +25,23 @@ module.exports = {
                 msg.guild.channels.forEach(c => {
                     c.overwritePermissions(user, {'SEND_MESSAGES': true});
                 })
-                msg.channel.send(`Unmuted ${msg.member.displayName}.`)
-                    .then(m=> m.delete(3000)
-                    .catch(err => console.log(err)), err => console.log(err));
+                msg.channel.send(`Unmuted ${msg.member.displayName}.`);
                 util.SaveFile('./data/mute.json', list);
             } else {
                 msg.guild.channels.forEach(c => {
                     c.overwritePermissions(user, {'SEND_MESSAGES': false});
                 })
-                msg.channel.send(`Muted ${msg.member.displayName}.`)
-                    .then(m=> m.delete(3000)
-                    .catch(err => console.log(err)), err => console.log(err));
+                msg.channel.send(`Muted ${msg.member.displayName}.`);
                 util.SaveFile('./data/mute.json', list);
             }
         } else {
-            if (!msg.guild.me.hasPermission("MUTE_MEMBERS")) {msg.channel.send(config.replySet.noPermsBot); return;};
+            if (!msg.guild.me.hasPermission("MUTE_MEMBERS")) {msg.channel.send(config.replySet.noPermsBot); return};
             if (msg.member.serverMute) {
                 msg.member.setMute(false)
-                msg.channel.send(`Unsilenced ${msg.mentions.members.first().displayName}.`)
-                    .then(m=> m.delete(3000)
-                    .catch(err => console.log(err)), err => console.log(err));
+                msg.channel.send(`Unsilenced ${msg.mentions.members.first().displayName}.`);
             } else {
                 msg.member.setMute(true)
-                msg.channel.send(`Silenced ${msg.mentions.members.first().displayName}.`)
-                    .then(m=> m.delete(3000)
-                    .catch(err => console.log(err)), err => console.log(err));
+                msg.channel.send(`Silenced ${msg.mentions.members.first().displayName}.`);
             }
         }
     }
