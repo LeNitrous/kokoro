@@ -13,6 +13,7 @@ module.exports = {
         Bandori.getCard(term)
         .then(card => {
             var thumb = card.image_trained != null ? card.image_trained : card.image;
+            console.log(thumb);
             var power = card.performance_trained_max + card.technique_trained_max + card.visual_trained_max != 0 ? card.performance_trained_max + card.technique_trained_max + card.visual_trained_max : card.performance_max + card.technique_max + card.visual_max;
             const info = new Discord.RichEmbed()
                 .setTitle(`[${card.name}] ${Constants.Members[card.member]}`)

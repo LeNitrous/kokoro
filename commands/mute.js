@@ -25,13 +25,13 @@ module.exports = {
                 msg.guild.channels.forEach(c => {
                     c.overwritePermissions(user, {'SEND_MESSAGES': true});
                 })
-                msg.channel.send(`Unmuted ${msg.member.displayName}.`);
+                msg.channel.send(`Unmuted ${msg.mentions.members.first().displayName.`);
                 util.SaveFile('./data/mute.json', list);
             } else {
                 msg.guild.channels.forEach(c => {
                     c.overwritePermissions(user, {'SEND_MESSAGES': false});
                 })
-                msg.channel.send(`Muted ${msg.member.displayName}.`);
+                msg.channel.send(`Muted ${msg.mentions.members.first().displayName.`);
                 util.SaveFile('./data/mute.json', list);
             }
         } else {

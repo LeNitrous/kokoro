@@ -6,8 +6,8 @@ module.exports = {
     usage: '<Number> "Bot|User"',
     serverOnly: true,
     run: (client, msg, args) => {
-        var user    = args[0];
-        var num     = args[1];
+        var user    = args[1];
+        var num     = args[0];
         if (!msg.guild.me.hasPermission("MANAGE_MESSAGES")) {msg.channel.send(config.replySet.noPermsBot); return};
         if (!msg.member.hasPermission("MANAGE_MESSAGES")) {msg.channel.send(config.replySet.noPermsUser); return};
         if (isNaN(num)) {msg.channel.send('Specify the number of messages to delete.'); return;}
