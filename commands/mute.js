@@ -10,7 +10,7 @@ module.exports = {
     run: (client, msg, args) => {
         var user      = msg.mentions.users.first();
         var member    = msg.mentions.members.first();
-        var isVoice   = args[1].toLowerCase();
+        var isVoice   = args[1];
         if (!msg.guild.me.hasPermission("MANAGE_CHANNELS")) {msg.channel.send(config.replySet.noPermsBot); return};
         if (!msg.member.hasPermission("MANAGE_CHANNELS")) {msg.channel.send(config.replySet.noPermsUser); return};
         if (user === undefined) {msg.channel.send('\u2139 Specify a user to mute.'); return}
