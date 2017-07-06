@@ -5,15 +5,16 @@ const fs 		= require('fs'),
 
 module.exports = {
     help: 'Toggle mute status of the user\'s text chat or voice chat.',
-    usage: '<User> "Voice"',
+    usage: '<User> "voice"',
     serverOnly: true,
     run: (client, msg, args) => {
         var user      = msg.mentions.users.first();
-        var isVoice   = args[1];
+        var member    = msg.mentions.members.first();
+        var isVoice   = args[1].toLowerCase();
         if (!msg.guild.me.hasPermission("MANAGE_CHANNELS")) {msg.channel.send(config.replySet.noPermsBot); return};
         if (!msg.member.hasPermission("MANAGE_CHANNELS")) {msg.channel.send(config.replySet.noPermsUser); return};
-        if (user === undefined) {msg.channel.send('Specify a user to mute.'); return}
-        if (user.id == msg.client.user.id) {msg.channel.send('You can\'t mute me!'); return};
+        if (user === undefined) {msg.channel.send('\u2139 Specify a user to mute.'); return}
+        if (user.id == msg.client.user.id) {msg.channel.send('\uD83D\uDED1 You can\'t mute me!'); return};
         if (!list[msg.guild.id]) {list[msg.guild.id] = [];}
         if (!list[msg.guild.id].includes(user.id)) {list[msg.guild.id].push(user.id);}
         else {
@@ -23,25 +24,26 @@ module.exports = {
         if (isVoice != 'voice') {
             if (!list[msg.guild.id].includes(user.id)) {
                 msg.guild.channels.forEach(c => {
-                    c.overwritePermissions(user, {'SEND_MESSAGES': true});
+                    //c.overwritePermissions(user, {'SEND_MESSAGES': null});
+                    c.permissionOverwrites.find('id', user.id).delete();
                 })
-                msg.channel.send(`Unmuted ${msg.mentions.members.first().displayName.`);
+                msg.channel.send(`\uD83D\uDD09 ${user.toString()} is now unsilenced.`);
                 util.SaveFile('./data/mute.json', list);
             } else {
                 msg.guild.channels.forEach(c => {
                     c.overwritePermissions(user, {'SEND_MESSAGES': false});
                 })
-                msg.channel.send(`Muted ${msg.mentions.members.first().displayName.`);
+                msg.channel.send(`\uD83D\uDD07 ${user.toString()} is now silenced.`);
                 util.SaveFile('./data/mute.json', list);
             }
         } else {
             if (!msg.guild.me.hasPermission("MUTE_MEMBERS")) {msg.channel.send(config.replySet.noPermsBot); return};
-            if (msg.member.serverMute) {
-                msg.member.setMute(false)
-                msg.channel.send(`Unsilenced ${msg.mentions.members.first().displayName}.`);
+            if (member.serverMute) {
+                member.setMute(false);
+                msg.channel.send(`\uD83D\uDD09 ${user.toString()} is now unmuted.`);
             } else {
-                msg.member.setMute(true)
-                msg.channel.send(`Silenced ${msg.mentions.members.first().displayName}.`);
+                member.setMute(true);
+                msg.channel.send(`\uD83D\uDD07 ${user.toString()} is now muted.`);
             }
         }
     }
