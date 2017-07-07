@@ -22,7 +22,7 @@ var validBoxGroups = {
     "u's": 1,
     "aqours": 1,
     "both": 1
-}
+};
 
 var validScoutTypes = {
     'honor': 1,
