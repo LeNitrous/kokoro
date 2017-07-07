@@ -3,6 +3,21 @@ const Discord = require('discord.js'),
       request = require('superagent'),
       Constants = require('../../utils/node-sif/Constants.js');
 
+// https://discuss.codecademy.com/t/challenge-reverse-words/83796/87
+function reverseString(originalString) {
+
+  function reverseStringRecursively(strVar) {
+	var posLastSpace = strVar.lastIndexOf(" ");
+  	if ( posLastSpace > -1) {
+  		return strVar.slice(posLastSpace) + reverseStringRecursively(strVar.substr(0, posLastSpace));
+  	} else {
+  		return strVar;
+  	}	
+  }
+
+  return reverseStringRecursively(" " + originalString).trim();
+}
+
 var validBoxGroups = {
     "u's": 1,
     "aqours": 1,
@@ -14,10 +29,6 @@ var validScoutTypes = {
     'honor10': 1,
     'ticket': 1,
 };
-
-// yeah I'm not going to send a request 11 times for this.
-// someone's going to kill me if so
-// unless i find an alternative way which is safer
 
 module.exports = {
     help: 'School idol festival Scouting Boxes!',
@@ -55,7 +66,7 @@ module.exports = {
                     if (!error && item.status === 200) {
                         var card = item.body.results[0];
                         const show = new Discord.RichEmbed()
-                            .setAuthor(`(${card.rarity}) ${card.idol.name}`, Constants[card.attribute].icon)
+                            .setAuthor(`(${card.rarity}) ${reverseString(card.idol.name)}`, Constants[card.attribute].icon)
                             .setFooter(`${msg.member.displayName}'s scouting result.`)
                             .setColor(Constants[card.attribute].color);
                         if (card.card_image != null) {show.setImage(`http:${card.card_image}`)}
@@ -69,7 +80,7 @@ module.exports = {
             var get = [];
             var list = [];
             var completed_requests = 0;
-            for (var i = 0; i < 11; i++) {
+            for (var i = 0; i < 10; i++) {
                 get.push(envelope.choose())
             }
             get.push('SR');
@@ -84,7 +95,7 @@ module.exports = {
                 req.end((error, item) => {
                     if(!error && item.status === 200) {
                         var card = item.body.results[0];
-                        list.push(`**${card.rarity}** ${card.attribute} ${card.idol.name} (#${card.id})`)
+                        list.push(`**${card.rarity}** ${card.attribute} ${reverseString(card.idol.name)} (#${card.id})`)
                         if (completed_requests++ == get.length -1) {
                             const show = new Discord.RichEmbed()
                                 .setTitle(`${msg.member.displayName} scouted:`)

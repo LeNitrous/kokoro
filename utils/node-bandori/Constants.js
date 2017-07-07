@@ -52,5 +52,23 @@ module.exports = {
         "lisa": 28,
         "ako": 29,
         "rinko": 30
+    },
+    Attributes: {
+        Power: {
+            color: [255, 39, 79],
+            icon: 'http://i.bandori.party/static/img/i_attribute/1.png'
+        },
+        Cool: {
+            color: [64, 87, 227],
+            icon: 'http://i.bandori.party/static/img/i_attribute/2.png'
+        },
+        Pure: {
+            color: [68, 197, 39],
+            icon: 'http://i.bandori.party/static/img/i_attribute/3.png'
+        },
+        Happy: {
+            color: [255, 132, 0],
+            icon: 'http://i.bandori.party/static/img/i_attribute/4.png'
+        }
     }
 }

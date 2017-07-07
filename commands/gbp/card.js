@@ -13,16 +13,15 @@ module.exports = {
         Bandori.getCard(term)
         .then(card => {
             var thumb = card.image_trained != null ? card.image_trained : card.image;
-            console.log(thumb);
             var power = card.performance_trained_max + card.technique_trained_max + card.visual_trained_max != 0 ? card.performance_trained_max + card.technique_trained_max + card.visual_trained_max : card.performance_max + card.technique_max + card.visual_max;
             const info = new Discord.RichEmbed()
-                .setTitle(`[${card.name}] ${Constants.Members[card.member]}`)
+                .setAuthor(`[${card.name}] ${Constants.Members[card.member]}`, Constants.Attributes[card.i_attribute].icon)
                 .setURL(`http://bandori.party/cards/${card.id}`)
                 .setThumbnail(thumb)
                 .addField('Skill Type', card.i_skill_type, true)
                 .addField('Max Power', power, true)
                 .addField(card.skill_name, card.skill_details)
-                .setColor([228, 0, 70]);
+                .setColor(Constants.Attributes[card.i_attribute].color);
             msg.channel.send({embed: info});
         })
         .catch(err => {

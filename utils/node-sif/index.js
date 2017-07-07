@@ -55,6 +55,20 @@ exports.getCardsFromSearch = (term) => {
     });
 }
 
+exports.getCardsByID = (term) => {
+    var id = term;
+    return new Promise((resolve, reject) => {
+        apiCall(`/cards/${id}/`).then(response => {
+            if (response.length === 0)
+                return this.notFoundAsError ? reject(new Error('There was a problem with finding the card')) : resolve(response);
+            resolve(response);
+        })
+        .catch(err => {
+            console.log(err.stack);
+        });
+    })
+}
+
 exports.getSongsFromSearch = (term) => {
     var searchTerm = term.split(',')[0];
     var filter = term.replace(/\s/g,'').split(',');
