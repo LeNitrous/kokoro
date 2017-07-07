@@ -1,0 +1,31 @@
+// Not yet working until Bandori API has query support
+
+const Discord = require('discord.js'),
+      Loot    = require('loot-table'),
+      request = require('superagent'),
+      Constants = require('../../utils/node-bandori/Constants.js');
+
+var validTypes = {
+    'solo': 1,
+    '10': 1
+};
+
+module.exports = {
+    help: 'Bandori Gachas!',
+    usage: '<Type>\nType can be "solo" or "10"',
+    run: (client, msg, args) => {
+        if (!validTypes[args[0]]) {return msg.channel.send('Invalid Type.')};
+        var type = args[0].toLowerCase();
+
+        var rarity = new Loot();
+        rarity.add('SSR', 1.5);
+        rarity.add('SR', 8.5);
+        rarity.add('R', 90);
+
+        var query = {};
+
+        if (type = 'solo') {
+
+        }
+    }
+}
