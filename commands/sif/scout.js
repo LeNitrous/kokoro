@@ -72,6 +72,7 @@ module.exports = {
             for (var i = 0; i < 11; i++) {
                 get.push(envelope.choose())
             }
+            get.push('SR');
             get.forEach(i => {
                 var req = request.get('http://schoolido.lu/api/cards/');
                 query.page_size = 1;
