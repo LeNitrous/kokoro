@@ -8,7 +8,7 @@ var blocks = {
     '6': ':six:',
     '7': ':seven:',
     '8': ':eight:',
-    '9': ':nine',
+    '9': ':nine:',
     'a': '\uD83C\uDDE6',
     'b': '\uD83C\uDDE7',
     'c': '\uD83C\uDDE8',
