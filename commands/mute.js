@@ -19,7 +19,7 @@ module.exports = {
         if (!list[msg.guild.id].includes(user.id)) {list[msg.guild.id].push(user.id);}
         else {
             var tar = list[msg.guild.id].indexOf(user.id);
-            if (tar > -1) {list[msg.guild.id].splice(tar, 1);};
+            if (tar > -1) {list[msg.guild.id].splice(tar, 1)};
         };
         if (isVoice != 'voice') {
             if (!list[msg.guild.id].includes(user.id)) {
