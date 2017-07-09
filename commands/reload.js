@@ -15,7 +15,7 @@ module.exports = {
         msg.channel.send(`\u2139 | Module \`${m}\` has been reloaded`);
         log.info2(`Reloaded: ${m}.js`);
         } catch (err){
-            util.sendcmdhelp(msg, 'reload', config.prefix, module.exports.help, module.exports.usage)
+            msg.channel.send('That is not a valid command.');
         }
     }
 }

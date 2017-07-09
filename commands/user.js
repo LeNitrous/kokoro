@@ -38,6 +38,7 @@ module.exports = {
         var user        = msg.mentions.users.first() !== undefined ? msg.mentions.users.first() : msg.author;
         var userGuild   = msg.guild.member(user)
         var status      = user.presence.game == null ? capitalize(user.presence.status) : `playing ${user.presence.game.name}`;
+        status == "Dnd" ? status = "Away" : status = status;
         var Role        = userGuild.highestRole == null ? 'None' : userGuild.highestRole;
         var statusIcon  = {
             offline: 'https://dummyimage.com/200x200/747F8D/00000.jpg&text=+',
