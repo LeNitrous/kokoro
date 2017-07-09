@@ -8,11 +8,11 @@ module.exports = {
         msg.channel.startTyping();
         request.get(`https://deresute.me/${game_id}/large`)
             .end((error, item) => {
-                if (error && item.status === 404) {msg.channel.send('Producer not found.'); msg.channel.stopTyping(); return};
+                if (error && item.status === 404 || item.status === 400) {msg.channel.send('Producer not found.'); msg.channel.stopTyping(); return};
                 msg.channel.send('', {files: [{attachment:`https://deresute.me/${game_id}/large`, name: 'producer.jpg'}]})
                     .then(m => {
                     msg.channel.stopTyping();
                 });
-            });
+            })
     }
 }

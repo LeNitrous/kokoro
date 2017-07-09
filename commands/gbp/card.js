@@ -1,12 +1,11 @@
-const request = require('then-request'),
-      Discord = require('discord.js'),
+const Discord = require('discord.js'),
       stripIndent   = require('common-tags').stripIndent,
       Constants = require('../../utils/node-bandori/Constants.js'),
       Bandori = require('../../utils/node-bandori');
 
 module.exports = {
-    help: 'Bandori Card Search.',
-    usage: '',
+    help: 'Bandori Cards.',
+    usage: '<ID>',
     run: (client, msg, args) => {
         var term = args.join(' ');
         var r = [];
@@ -28,6 +27,7 @@ module.exports = {
         })
         .catch(err => {
             console.log(err.stack);
+            msg.channel.send('Card not found.');
         });
         /*
         Bandori.getCardsFromSearch(term)

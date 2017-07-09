@@ -43,6 +43,6 @@ module.exports = {
 
     sendcmdlist: (msg, page, path, prefix, h = '', sub = '', user) => {
         //msg.channel.send(`${h}Help List: Page ${page}\n===============================================================================\n${module.exports.listcmd(page, path)}\n"${prefix}help ${sub} <Command|Page>" to show how to use the command or scroll to next page.`, {code: 'md'});
-        user.send(`${h}Help List: Page ${page}\n===============================================================================\n${module.exports.listcmd(page, path)}\n"${prefix}help ${sub} <Command|Page>" to show how to use the command or scroll to next page.`, {code: 'md'});
+        user.send(`${h}Help List: Page ${page}\n===============================================================================\n${module.exports.listcmd(page, path)}\n"${prefix}help ${sub} <Command>" to show how to use the command.\n"${prefix}help ${sub} <Number> to go to a page."`, {code: 'md'});
     }
 };
