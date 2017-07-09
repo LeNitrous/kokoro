@@ -4,17 +4,17 @@ const fs 		= require('fs'),
       list      = require('../data/mute.json');
 
 module.exports = {
-    help: 'Toggle mute status of the user\'s text chat or voice chat.',
-    usage: '<User> "voice"',
+    help: 'Toggle mute status of the user\'s text chat or voice chat.\nAdd a "-setup" flag to setup roles and permissions.',
+    usage: '<User> "-setup"',
     serverOnly: true,
     run: (client, msg, args) => {
-        var user      = msg.mentions.users.first();
         var member    = msg.mentions.members.first();
-        var isVoice   = args[1];
+        var flags = args.join(" ");
         if (!msg.guild.me.hasPermission("MANAGE_CHANNELS")) {msg.channel.send(config.replySet.noPermsBot); return};
         if (!msg.member.hasPermission("MANAGE_CHANNELS")) {msg.channel.send(config.replySet.noPermsUser); return};
-        if (user === undefined) {msg.channel.send('\u2139 Specify a user to mute.'); return}
-        if (user.id == msg.client.user.id) {msg.channel.send('\uD83D\uDED1 You can\'t mute me!'); return};
+        if (!msg.guild.me.hasPermission("MANAGE_ROLES")) {msg.channel.send(config.replySet.noPermsBot); return};
+        if (!msg.member.hasPermission("MANAGE_ROLES")) {msg.channel.send(config.replySet.noPermsUser); return};
+        /*
         if (!list[msg.guild.id]) {list[msg.guild.id] = [];}
         if (!list[msg.guild.id].includes(user.id)) {list[msg.guild.id].push(user.id);}
         else {
@@ -24,7 +24,6 @@ module.exports = {
         if (isVoice != 'voice') {
             if (!list[msg.guild.id].includes(user.id)) {
                 msg.guild.channels.forEach(c => {
-                    //c.overwritePermissions(user, {'SEND_MESSAGES': null});
                     c.permissionOverwrites.find('id', user.id).delete();
                 })
                 msg.channel.send(`\uD83D\uDD09 ${user.toString()} is now unsilenced.`);
@@ -46,5 +45,42 @@ module.exports = {
                 msg.channel.send(`\uD83D\uDD07 ${user.toString()} is now muted.`);
             }
         }
+        */
+        if (flags.includes("-setup")) {
+            if (msg.guild.roles.exists("name", "Muted")) {
+                msg.channel.send('The server already has this role.');
+                return;
+            };
+            msg.guild.createRole({
+                name: "Muted",
+                color: [0, 0, 0]
+            }).then(role => {
+                msg.guild.channels.forEach(chan => {
+                    chan.overwritePermissions(role, {'SEND_MESSAGES': false});
+                })
+                msg.channel.send('Created **Muted** role.');
+            });
+            return;
+        };
+
+        if (member.id == client.user.id) {msg.channel.send('\uD83D\uDED1 You can\'t mute me.'); return};
+
+        if (!msg.guild.roles.exists("name", "Muted")) {
+            msg.channel.send('The server has no **Muted** role.');
+            return;
+        };
+
+        if (Boolean(member) && !member.roles.exists("name", "Muted")) {
+            member.addRole(msg.guild.roles.find("name", "Muted"));
+            msg.channel.send(`\uD83D\uDD07 ${member.toString()} is now silenced.`);
+        }
+        else if (Boolean(member) && member.roles.exists("name", "Muted")) {
+            member.removeRole(msg.guild.roles.find("name", "Muted"));
+            msg.channel.send(`\uD83D\uDD09 ${member.toString()} is now unsilenced.`);
+        }
+        else {
+            msg.channel.send('Specify a user to mute.');
+            return;
+        };
     }
 }
