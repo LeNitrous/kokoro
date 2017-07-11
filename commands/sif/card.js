@@ -55,6 +55,7 @@ module.exports = {
             })
             .catch(err => {
                 console.log(err.stack);
+                msg.channel.send('Card not found');
             });
             return;
         }
