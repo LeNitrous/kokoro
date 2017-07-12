@@ -19,14 +19,14 @@ module.exports = {
             if (!list[msg.guild.id][m.id]) {return;};
             delete list[msg.guild.id][m.id];
             util.SaveFile('./data/osu_link.json', list);
-            msg.channel.send(`\u274C \u276f  ${msg.guild.member(m).displayName} is now unlinked.`);
+            msg.channel.send(`\uD83D\uDD17 \u276f  ${msg.guild.member(m).displayName} is now unlinked.`);
             return;
         }
         osu.getUser({u: u})
             .then(user => {
                 if (!list[msg.guild.id]) {list[msg.guild.id] = {};};
                 if (!list[msg.guild.id[m.id]]) {list[msg.guild.id][m.id] = user.id};
-                msg.channel.send(`\u1F517 \u276f  ${msg.guild.member(m).displayName} is now linked to **${user.name}**.`);
+                msg.channel.send(`\uD83D\uDD17 \u276f  ${msg.guild.member(m).displayName} is now linked to **${user.name}**.`);
                 util.SaveFile('./data/osu_link.json', list);
             })
             .catch(err => {
