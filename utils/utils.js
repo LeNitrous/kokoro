@@ -8,7 +8,6 @@ function get_line(filename, line_no) {
     var lines = data.split("\n");
 
     if(+line_no > lines.length){
-      //throw new Error('File end reached without finding line');
       return undefined;
     }
 
@@ -40,7 +39,7 @@ module.exports = {
         });
         folders.forEach(folder => {
             if (get_line(`${path}/${folder}/${folder}.txt`, 1) != 'true' && user.id != config.ownerID || user.id == config.ownerID)
-                commands[folder] = fs.readFileSync(`${path}/${folder}/${folder}.txt`, 'utf8') + ' commands group.';
+                commands[folder] = get_line(`${path}/${folder}/${folder}.txt`, 0) + ' commands group.';
         });
         for(var prop in commands) {
             list.push(`* ${prop}\n\t> ${commands[prop]}`);
