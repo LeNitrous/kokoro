@@ -19,7 +19,7 @@ module.exports = {
         })
         .catch(err => {
             console.log(err.stack);
-            msg.channel.send('Card not found');
+            msg.channel.send('\u26A0 \u276f  Card not found');
             msg.channel.stopTyping();
         });
     }

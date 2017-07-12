@@ -38,7 +38,7 @@ module.exports = {
                 .then(r => {
                     r.first().delete();
                     msg.guild.me.lastMessage.delete();
-                    if (r.first().content > items.length + 1) {msg.channel.send('Sent number is too big. Please try again.'); return;}
+                    if (r.first().content > items.length + 1) {msg.channel.send('\u26A0 \u276f  Sent number is too big. Please try again.'); return;}
                     if (r.first().content == "cancel") {return};
                     var song = items[r.first().content -1];
                     var diffs = stripIndent`
@@ -70,7 +70,7 @@ module.exports = {
                 .catch(err => {
                     console.log(err.stack);
                     msg.guild.me.lastMessage.delete();
-                    msg.channel.send('Reply took too long.');                    
+                    msg.channel.send('\u26A0 \u276f  Reply took too long.');                    
                 })
         })
     }

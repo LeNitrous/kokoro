@@ -1,6 +1,5 @@
 const Discord       = require('discord.js'),
 	  stripIndent	= require('common-tags').stripIndent,
-	  fs 	    	= require('fs'),
 	  config  		= require('../config.json');
 
 function format(seconds){
@@ -29,7 +28,7 @@ module.exports = {
 			Invite me to your server using this [link](https://discordapp.com/oauth2/authorize?client_id=${config.client_id}&scope=bot)!
 			`)
 			.addField('Notice!', stripIndent`
-			I'm still under heavy development! There might be things that are still broken or missing. Please be patient and my owner will eventually add them.
+			I'm still under heavy development! New features are underway and there might also be updates at any time. There might also be things that are still broken or missing. Please be patient everything will be added and fixed.
 			`)
 			.addField(`${client.user.username} ver. ${config.bot_version}`, stripIndent`
 			\u2022 Servers: ${client.guilds.size}		

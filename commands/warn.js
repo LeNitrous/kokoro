@@ -11,14 +11,14 @@ module.exports = {
     serverOnly: true,
     run: (client, msg, args) => {
         var user = msg.mentions.users.first();
-        if (!msg.member.hasPermission("KICK_MEMBERS")) {msg.channel.send(config.replySet.noPermsBot); return;};
-        if (!args[0]) { util.sendcmdhelp(msg, 'warn', config.prefix, module.exports.help, module.exports.usage); return;}
+        if (!msg.member.hasPermission("KICK_MEMBERS")) { return msg.channel.send(config.replySet.noPermsBot) };
+        if (!args[0]) { return msg.channel.send('\u26A0 \u276f  Specify a user to warn.') };
 
         if (args[1] !== undefined) {
             if (args[1].toLowerCase() == 'get') { 
                 const embed = new Discord.RichEmbed()
                     .setAuthor(`${user.tag}`, user.displayAvatarURL)
-                    .setDescription(`**Warnings:** ${(!list[msg.guild.id]) ? '0' : list[msg.guild.id][user.id] }`)
+                    .setDescription(`\u1F4A1 \u276f  **Warnings:** ${(!list[msg.guild.id]) ? '0' : list[msg.guild.id][user.id] }`)
                     .setTimestamp(new Date())
                     .setColor([255, 221, 8]);
                 msg.channel.send({embed});
@@ -29,11 +29,11 @@ module.exports = {
                 if (!isNaN(parseInt(args[2]))) {
                     if (!list[msg.guild.id]) { list[msg.guild.id] = {};}
                     list[msg.guild.id][user.id] = args[2]; 
-                    msg.channel.send(`${msg.guild.member(user).displayName}'s warnings has been set to ${args[2]}.`);
+                    msg.channel.send(`\u1F4A1 \u276f  ${msg.guild.member(user).displayName}'s warnings has been set to ${args[2]}.`);
                     util.SaveFile('./data/warn.json');
                     return; 
                 } else {
-                    util.sendcmdhelp(msg, 'warn', config.prefix, module.exports.help, module.exports.usage);
+                    msg.channel.send(`\u1F6AB \u276f  Invalid argument.`)
                     return;
                 }
             }
@@ -43,7 +43,7 @@ module.exports = {
         if (!list[msg.guild.id][user.id]) {list[msg.guild.id][user.id] = 0;}
         list[msg.guild.id][user.id]++;
 
-        msg.channel.send(`<@${user.id}> \uD83D\uDCE3 You have been warned!`)
+        msg.channel.send(`\uD83D\uDCE3 \u276f  ${user.toString()} You have been warned!`)
         util.SaveFile('./data/warn.json', list);
     }
 }

@@ -47,8 +47,7 @@ module.exports = {
             dnd: 'https://dummyimage.com/200x200/F04747/00000.jpg&text=+',
         };
         const embed = new Discord.RichEmbed()
-            .setAuthor('\u276f ' + userGuild.displayName, statusIcon[user.presence.status])
-//          .setAuthor('\u276f ' + userGuild.displayName)
+            .setAuthor('\u276f \xa0\xa0' + userGuild.displayName, statusIcon[user.presence.status])
             .setThumbnail(user.avatarURL)
             .setDescription('is ' + status)
             .setColor(userGuild.displayHexColor)

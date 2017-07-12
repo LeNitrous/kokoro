@@ -55,7 +55,7 @@ module.exports = {
             })
             .catch(err => {
                 console.log(err.stack);
-                msg.channel.send('Card not found');
+                msg.channel.send('\u26A0 \u276f  Card not found');
             });
             return;
         }
@@ -75,7 +75,7 @@ module.exports = {
                 .then(r => {
                     r.first().delete();
                     msg.guild.me.lastMessage.delete();
-                    if (r.first().content > items.length + 1) {msg.channel.send('Sent number is too big. Please try again.'); return;}
+                    if (r.first().content > items.length + 1) {msg.channel.send('\u26A0 \u276f  Sent number is too big. Please try again.'); return;}
                     if (r.first().content == "cancel") {return};
                     var card = items[r.first().content -1];
                     const info = new Discord.RichEmbed()
@@ -108,7 +108,7 @@ module.exports = {
                 .catch(err => {
                     console.log(err.stack);
                     msg.guild.me.lastMessage.delete();
-                    msg.channel.send('Reply took too long.');
+                    msg.channel.send('\u26A0 \u276f  Reply took too long.');
                 });
         })
     }

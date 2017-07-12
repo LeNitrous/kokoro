@@ -1,5 +1,4 @@
-const util      = require('../utils/utils.js'),
-      config    = require('../config.json');
+const config    = require('../config.json');
 
 module.exports = {
     help: 'Revokes a ban from a user.',
@@ -8,15 +7,17 @@ module.exports = {
     serverOnly: true,
     run: (client, msg, args) => {
         var user      = args.join(' ');
-        if (user === undefined) {util.sendcmdhelp(msg, 'unban', config.prefix, module.exports.help, module.exports.usage); return;}
-        if (!msg.guild.me.hasPermission("BAN_MEMBERS")) {msg.channel.send(config.replySet.noPermsBot); return;};
+        if (user === undefined) { return util.sendcmdhelp(msg, 'unban', config.prefix, module.exports.help, module.exports.usage) };
+        if (!msg.guild.me.hasPermission("BAN_MEMBERS")) { return msg.channel.send(config.replySet.noPermsBot) };
         msg.guild.fetchBans()
             .then(u => {
                 var target = u.findKey('username', user);
                 msg.guild.unban(target);
-                msg.channel.send(`Unbanned ${user}.`)
+                msg.channel.send(`\u1F4A1 \u276f  Unbanned **${user}**.`)
                     .then(m=> m.delete(3000)
                     .catch(err => console.log(err)), err => console.log(err));
-            }, err => {util.sendcmdhelp(msg, 'unban', config.prefix, module.exports.help, module.exports.usage); console.log(err)});
+            }, err => {
+                msg.channel.send(`\u1F6AB \u276f  Cannot revoke ban on **${user}**.`)
+            });
     }
 }

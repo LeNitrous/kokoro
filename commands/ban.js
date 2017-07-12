@@ -1,29 +1,26 @@
-const   util      = require('../utils/utils.js'),
-        config    = require('../config.json');
+const config    = require('../config.json');
 
 module.exports = {
     help: 'Bans a user off your guild.',
     usage: '<User> "Reason"',
     serverOnly: true,
-    run: (client, msg, args) => {
-        var user      = msg.mentions.users.first();
+    run: (client, msg, args) => { 
+        var member = msg.mentions.members.first();
         args.shift();
-        if (!msg.guild.me.hasPermission("BAN_MEMBERS")) {msg.channel.send(config.replySet.noPermsBot); return};
-        if (!msg.member.hasPermission("BAN_MEMBERS")) {msg.channel.send(config.replySet.noPermsUser); return};
         var text = args.join(" ");
+        if (!msg.guild.me.hasPermission("BAN_MEMBERS")) { return msg.channel.send(config.replySet.noPermsBot) };
+        if (!msg.member.hasPermission("BAN_MEMBERS")) { return msg.channel.send(config.replySet.noPermsUser) };
+        if (member === undefined) { return msg.channel.send('\u26A0 \u276f  Specify a user to ban.') };
         if (text.length <= 0) {text = 'No reason specificed.'};
-        if (user === undefined) {msg.channel.send('Specify a user to ban.'); return}
-        if (user == msg.author.id) {msg.channel.send(`You can't ban yourself!`); return}
-        if (msg.member.bannable) {
-            user.dmChannel.send(`You have been banned from **${msg.guild.name}** by **${msg.author.username}**.\n\n**Reason:** ${text}`)
+        if (member == msg.author.id) { return msg.channel.send(`\u26A0 \u276f  You can't ban yourself!`) };
+        if (member.bannable) {
+            member.user.send(`You have been banned from **${msg.guild.name}** by **${msg.author.username}**.\n\n**Reason:** ${text}`)
                .catch(console.error);
-            msg.channel.send(`Banned ${user.username}.`)
-                .then(m=> m.delete(3000)
-                .catch(err => console.log(err)), err => console.log(err));
-            msg.member.ban({reason: text});
+            msg.channel.send(`\u1F6AB \u276f  Banned **${member.user.username}**.\n\n**Reason:** ${text}`);
+            member.ban({reason: text});
         }
         else {
-            msg.channel.send(`Can't ban **${msg.member.displayName}**!`);
-        }
+            msg.channel.send(`\u26A0 \u276f  **${member.user.username}** can't be banned.`);
+        };
     }
 }

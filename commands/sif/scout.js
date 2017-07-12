@@ -7,13 +7,13 @@ const Discord = require('discord.js'),
 
 var Canvas = require('canvas'),
     Image  = Canvas.Image,
-    canvas = new Canvas(960, 640),
+    canvas = new Canvas(960, 400),
     ctx    = canvas.getContext('2d');
 
 var validBoxGroups = {
     "u's": 1,
     "aqours": 1,
-//  "both": 1               // Disabled due to superagent bug
+    "both": 1
 };
 
 var validScoutTypes = {
@@ -24,7 +24,7 @@ var validScoutTypes = {
 
 module.exports = {
     help: 'School idol festival Scouting Boxes!',
-    usage: '<Box> <Type>\nBoxes can be: "u\'s", "aqours", "both"\nTypes can be: "honor", "honor10", "ticket"',
+    usage: '<Box> <Type>\nBoxes can be: "u\'s", "aqours"\nTypes can be: "honor", "honor10", "ticket"',
     run: (client, msg, args) => {
 
         var box     = args[0].toLowerCase();
@@ -48,14 +48,13 @@ module.exports = {
         }
 
         var query = {};
-
-        if (type != 'honor10') {
         query.page_size = 1;
-        query.is_promo = false;
-        query.is_special = false;
+        query.is_promo = 'False';
         query.ordering = "random";
         if (box != 'both') {query.idol_main_unit = box == 'u\'s' ? '\u03BC\'s' : box};
         if (box == 'both') {query.idol_main_unit = '\u03BC\'s,Aqours'};
+
+        if (type != 'honor10') {
             query.rarity = envelope.choose();
             request.get('http://schoolido.lu/api/cards/')
                 .query(query)
@@ -65,7 +64,7 @@ module.exports = {
                         msg.channel.send('', {files: [{attachment: buff, name: 'sif_scout.jpg'}]})
                     }
                     else
-                        msg.channel.send('There was a problem getting the cards.');
+                        msg.channel.send('\u26A0 \u276f  There was a problem getting the cards.');
                 msg.channel.stopTyping();
             });
         }
@@ -81,13 +80,7 @@ module.exports = {
             get.push('SR');
             get.forEach(i => {
                 var req = request.get('http://schoolido.lu/api/cards/');
-                query.page_size = 1;
-                query.ordering = "random";
                 query.rarity = i;
-                if (box != 'both') {query.idol_main_unit = box == 'u\'s' ? '\u03BC\'s' : box};
-                if (box == 'both') {query.idol_main_unit = '\u03BC\'s,Aqours'};
-                req.query('is_promo=false');
-                req.query('is_special=false');
                 req.query(query);
                 req.end((error, item) => {
                     if(!error && item.status === 200) {
@@ -105,10 +98,7 @@ module.exports = {
                                                 console.log('loaded');
                                             };
                                             c_bg.src = bg;
-                                            ctx.drawImage(c_bg, 0, 0, 960, 640);
-                                            ctx.font = 'normal 18px MotoyaLMaru';
-                                            ctx.fillStyle = '#AFAFAF'
-                                            ctx.fillText(`Scouted by ${msg.author.username}`, 50, 510);
+                                            ctx.drawImage(c_bg, 960/2 - 360/2, 10);
                                             buffList.forEach((c, i) => {
                                                 c_List[i] = new Image;
                                             });
@@ -116,12 +106,12 @@ module.exports = {
                                                 c.src = buffList[i];
                                             });
                                             for (var o = 0; o <= 5; o++) {
-                                                ctx.drawImage(c_List[o], 65 + (140 * o), 100);
+                                                ctx.drawImage(c_List[o], 65 + (140 * o), 75);
                                             }
                                             for (var o = 6; o <= 10; o++) {
-                                                ctx.drawImage(c_List[o], 155 + (140 * (o - 6)), 300);
+                                                ctx.drawImage(c_List[o], 155 + (140 * (o - 6)), 245);
                                             }
-                                            msg.channel.send('', {files: [{attachment: canvas.toBuffer(), name: 'scout_scout10.jpg'}]});
+                                            msg.channel.send(`**${msg.author.username}**`, {files: [{attachment: canvas.toBuffer(), name: 'scout_scout10.jpg'}]});
                                             ctx.clearRect(0, 0, canvas.width, canvas.height)
                                         });
                                     };
@@ -129,8 +119,10 @@ module.exports = {
                             });
                         };
                     }
-                    else
+                    else {
                         console.log('Error.');
+                        msg.channel.send('\u26A0 \u276f  There was a problem getting the cards.');
+                    };
                     msg.channel.stopTyping();
                 });
             });

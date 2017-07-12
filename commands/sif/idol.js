@@ -24,8 +24,8 @@ module.exports = {
                 .then(r => {
                     r.first().delete();
                     msg.guild.me.lastMessage.delete();
-                    if (isNaN(parseInt(r.first().content))) {msg.channel.send('Please provide a valid number.'); return;}
-                    if (r.first().content > items.length + 1) {msg.channel.send('Sent number is too big. Please try again.'); return;}
+                    if (isNaN(parseInt(r.first().content))) {msg.channel.send('\u26A0 \u276f  Please provide a valid number.'); return;}
+                    if (r.first().content > items.length + 1) {msg.channel.send('\u26A0 \u276f  Sent number is too big. Please try again.'); return;}
                     if (r.first().content == "cancel") {return};
                     var idol = items[r.first().content - 1];
                     const info = new Discord.RichEmbed()
@@ -66,8 +66,8 @@ module.exports = {
                 .catch(err => {
                     console.log(err.stack);
                     msg.guild.me.lastMessage.delete();
-                    if (err.name == 'TypeError') {return msg.channel.send('The idol doesn\'t seem to have much information.')};
-                    msg.channel.send('Reply took too long.');
+                    if (err.name == 'TypeError') {return msg.channel.send('\u26A0 \u276f  The idol doesn\'t seem to have much information.')};
+                    msg.channel.send('\u26A0 \u276f  Reply took too long.');
                 });
         })
     }

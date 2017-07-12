@@ -39,11 +39,11 @@ var blocks = {
     '?': ':question:',
     '#': ':hash:',
     '*': ':asterisk:',
-    ' ': ':black_large_square:'
+    ' ': '\xa0\xa0\xa0'
 };
 
 function blockify(string) {
-    var s = string.toLowerCase().replace(/[^0-9a-z!?#*]/gi, '').split('');
+    var s = string.toLowerCase().replace(/[^0-9a-z!?#* *]/gi, '').split('');
     var r = [];
     s.forEach(l => {
         r.push(blocks[l]);

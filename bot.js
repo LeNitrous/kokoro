@@ -37,10 +37,10 @@ Bot.on('message', (message) => {
 		if (Boolean(err)) return;
 		file = require(fp);
 		args = obj;
-		if (file.serverOnly && message.channel.guild === undefined) { message.channel.send(config.replySet.serverOnly); return; };
-		if (file.ownerOnly && message.author.id != config.ownerID) { message.channel.send(config.replySet.noPermsUser); return; };
-		if (file.serverOwnerOnly && message.author.id != message.guild.ownerID) { message.channel.send(config.replySet.noPermsUser); return; };
-		log.logCommand(message.channel.guild === undefined ? null: message.channel.guild.name, message.author.username, message.content.slice(config.prefix.length));
+		if (file.serverOnly && message.channel.guild === undefined) { return message.channel.send(config.replySet.serverOnly) };
+		if (file.ownerOnly && message.author.id != config.ownerID) { return message.channel.send(config.replySet.noPermsUser) };
+		if (file.serverOwnerOnly && message.author.id != message.guild.ownerID) { return message.channel.send(config.replySet.noPermsUser) };
+		log.logCommand(message.channel.guild === undefined ? null: message.channel.guild.name, message.author.username, message.content.slice(config.prefix.length), message.channel.name);
 		file.run(Bot, message, args);
 	});
 
@@ -52,10 +52,10 @@ Bot.on('message', (message) => {
 			if (Boolean(err)) return;
 			file = require(fp + '/' + sub + '.js');
 			args = obj;
-			if (file.serverOnly && message.channel.guild === undefined) { message.channel.send(config.replySet.serverOnly); return; };
-			if (file.ownerOnly && message.author.id != config.ownerID) { message.channel.send(config.replySet.noPermsUser); return; };
-			if (file.serverOwnerOnly && message.author.id != message.guild.ownerID) { message.channel.send(config.replySet.noPermsUser); return; };
-			log.logCommand(message.channel.guild === undefined ? null: message.channel.guild.name, message.author.username, message.content.slice(config.prefix.length));
+			if (file.serverOnly && message.channel.guild === undefined) { return message.channel.send(config.replySet.serverOnly) };
+			if (file.ownerOnly && message.author.id != config.ownerID) { return message.channel.send(config.replySet.noPermsUser) };
+			if (file.serverOwnerOnly && message.author.id != message.guild.ownerID) { return message.channel.send(config.replySet.noPermsUser) };
+			log.logCommand(message.channel.guild === undefined ? null: message.channel.guild.name, message.author.username, message.content.slice(config.prefix.length), message.channel.name);
 			file.run(Bot, message, args);
 		});
 	});

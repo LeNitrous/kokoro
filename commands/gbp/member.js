@@ -33,6 +33,7 @@ module.exports = {
         })
         .catch(err => {
             console.log(err);
+            msg.channel.send('\u26A0 \u276f  Member not found.');
         });
 /*
         Bandori.getMembers(term)

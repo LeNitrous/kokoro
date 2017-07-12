@@ -51,7 +51,7 @@ module.exports = {
             })
             .catch(err => {
                 console.log(err.stack);
-                if (err.message == 'User not found') {msg.channel.send('User not found.'); return;};
+                if (err.message == 'User not found') {msg.channel.send('\u26A0 \u276f  User not found.'); return;};
                 msg.channel.send(config.replySet.error);
             })
     }

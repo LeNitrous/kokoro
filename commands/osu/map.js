@@ -77,7 +77,7 @@ module.exports = {
                 .catch(err => {
                     console.log(err.stack);
                     if (err.name == 'RangeError') {msg.channel.send('Cannot parse this beatmap.'); return;};
-                    if (err.message == 'Beatmap Set not found') {msg.channel.send('Beatmap Set not found.'); return;};
+                    if (err.message == 'Beatmap Set not found') {msg.channel.send('\u26A0 \u276f  Beatmap Set not found.'); return;};
                     msg.channel.send(config.replySet.error);
                 });
         }
@@ -111,11 +111,11 @@ module.exports = {
                 })   
                 .catch(err => {
                     console.log(err.stack);
-                    msg.channel.send('Beatmap not found.');
+                    msg.channel.send('\u26A0 \u276f  Beatmap not found.');
                 });
         }
         else {
-            util.sendcmdhelp(msg, 'osu map', config.prefix, module.exports.help, module.exports.usage);
+            msg.channel.send('\u26A0 \u276f  Invalid Argument.');
         };
     }
 }

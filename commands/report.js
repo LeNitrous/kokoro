@@ -8,10 +8,7 @@ module.exports = {
     usage: "<Message>",
     run: (client, msg, args) => {
         var text = args.join(" ");
-        if(blacklist[msg.author.id]) {
-            msg.author.send('You are not allowed to send reports.');
-            return;
-        };
+        if(blacklist[msg.author.id]) { return msg.author.send('\u1F6AB \u276f  You are not allowed to send reports.') };
         const embed = new Discord.RichEmbed()
             .setAuthor(msg.author.tag)
             .setColor([247, 49, 49])
@@ -21,7 +18,7 @@ module.exports = {
             .setTimestamp(new Date())
             .setFooter(`Report #${config.reportCount}`);
         client.users.find('id', config.ownerID).send({embed});
-        msg.author.send('Your report has been submitted.');
+        msg.author.send(`\u1F4A1 \u276f  Your report has been submitted. **ID: #${config.reportCount}**`);
         config.reportCount++;
         util.SaveFile('./config.json', config);
     }

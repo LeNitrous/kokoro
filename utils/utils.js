@@ -1,5 +1,19 @@
 const fs 	= require('fs'),
-      path  = require('path');
+      path  = require('path'),
+      config = require('../config.json');
+
+// https://stackoverflow.com/questions/6394951/read-nth-line-of-file-in-nodejs
+function get_line(filename, line_no) {
+    var data = fs.readFileSync(filename, 'utf8');
+    var lines = data.split("\n");
+
+    if(+line_no > lines.length){
+      //throw new Error('File end reached without finding line');
+      return undefined;
+    }
+
+    return lines[+line_no];
+}
 
 module.exports = {
     sendcmdhelp: (msg, cmd, prefix, help, usage, user) => {
@@ -7,7 +21,7 @@ module.exports = {
         user.send(`\`\`\`md\n# ${cmd}\n\t> ${help}\n\t> ${prefix}${cmd} ${usage}\`\`\``);
     },
 
-    listcmd: (page, path) => {
+    listcmd: (page, path, user) => {
         var commands = [];
         var list     = [];
         var files    = fs.readdirSync(path).filter(obj => {
@@ -21,10 +35,12 @@ module.exports = {
         });
         files.forEach(file => {
             var cmd = file.split('.')[0];
-            commands[cmd] = require(`${path}/${cmd}.js`).help != undefined ? require(`${path}/${cmd}.js`).help: '';
+            if (!require(`${path}/${cmd}.js`).ownerOnly && user.id != config.ownerID || user.id == config.ownerID)
+                commands[cmd] = require(`${path}/${cmd}.js`).help != undefined ? require(`${path}/${cmd}.js`).help: '';
         });
         folders.forEach(folder => {
-            commands[folder] = fs.readFileSync(`${path}/${folder}/${folder}.txt`, 'utf8') + ' commands group.';
+            if (get_line(`${path}/${folder}/${folder}.txt`, 1) != 'true' && user.id != config.ownerID || user.id == config.ownerID)
+                commands[folder] = fs.readFileSync(`${path}/${folder}/${folder}.txt`, 'utf8') + ' commands group.';
         });
         for(var prop in commands) {
             list.push(`* ${prop}\n\t> ${commands[prop]}`);
@@ -43,6 +59,6 @@ module.exports = {
 
     sendcmdlist: (msg, page, path, prefix, h = '', sub = '', user) => {
         //msg.channel.send(`${h}Help List: Page ${page}\n===============================================================================\n${module.exports.listcmd(page, path)}\n"${prefix}help ${sub} <Command|Page>" to show how to use the command or scroll to next page.`, {code: 'md'});
-        user.send(`${h}Help List: Page ${page}\n===============================================================================\n${module.exports.listcmd(page, path)}\n"${prefix}help ${sub} <Command>" to show how to use the command.\n"${prefix}help ${sub} <Number> to go to a page."`, {code: 'md'});
+        user.send(`${h}Help List: Page ${page}\n===============================================================================\n${module.exports.listcmd(page, path, user)}\n"${prefix}help ${sub} <Command>" to show how to use the command.\n"${prefix}help ${sub} <Number> to go to a page."`, {code: 'md'});
     }
 };

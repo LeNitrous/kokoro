@@ -8,12 +8,12 @@ module.exports = {
         var user = args[0];
         if (!list[user]) {
             list.push(user)
-            msg.channel.send(`Blacklisted **${client.users.find('id', user).tag}**.`)
+            msg.channel.send(`\u1F4CB \u276f  Blacklisted **${client.users.find('id', user).tag}**.`)
         }
         else {
             var tar = list.indexOf(user);
             if (tar > -1) {list.splice(tar, 1)};
-            msg.channel.send(`Unblacklisted **${client.users.find('id', user).tag}**.`)
+            msg.channel.send(`\u1F4CB \u276f  Unblacklisted **${client.users.find('id', user).tag}**.`)
         };
     }
 }
