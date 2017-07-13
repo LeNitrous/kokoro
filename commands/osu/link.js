@@ -6,13 +6,13 @@ const osuApi    = require('../../utils/node-osu'),
 var osu = new osuApi.Api(config.osu_token);
 
 module.exports = {
-    help: 'Link Discord to an osu! account. Leave <user> blank to clear',
-    usage: '<mention> <osu user>',
+    help: 'Link Discord to an osu! account. Leave <osu user> blank to clear',
+    usage: '<osu user>',
     serverOnly: true,
     run: (client, msg, args) => {
-        var m = msg.mentions.users.first();
-        var u = args[1];
-        if (args[1] === undefined) {
+        var m = msg.author;
+        var u = args[0];
+        if (u === undefined) {
             if (!list[msg.guild.id]) { return };
             if (!list[msg.guild.id][m.id]) { return };
             delete list[msg.guild.id][m.id].osu;
