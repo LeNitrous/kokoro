@@ -1,3 +1,10 @@
+const reqBuff = require('request').defaults({encoding: null});
+
+var Canvas = require('canvas'),
+    Image  = Canvas.Image,
+    canvas = new Canvas(512, 512),
+    ctx    = canvas.getContext('2d');
+
 var blocks = {
     '0': ':zero:',
     '1': ':one:',
@@ -56,7 +63,19 @@ module.exports = {
     usage: `<text>`,
     run: (client, msg, args) => {
         if (!args[0])
-            return msg.channel.send('No arguments passed.');
+            return msg.channel.send('\u26A0 \u276f  Invalid argument.');
+        if (args[0].match(/<:[\w]+:[\d]+>/g)) {
+            var emoji_id = args[0].match(/[0-9]/g).join("");
+            var emoji = msg.guild.emojis.find('id', emoji_id);
+            var enlarged = new Image;
+            reqBuff.get(emoji.url, (err, res, body) => {
+                enlarged.onload = () => { };
+                enlarged.src = body;
+                ctx.drawImage(enlarged, 0, 0, 512, 512);
+                msg.channel.send(``, {files: [{attachment: canvas.toBuffer(), name: `${emoji.name}_enlarged.jpg`}]});
+            });
+            return;
+        };
         var text = args.join(" ");
         msg.channel.send(blockify(text));
     }
