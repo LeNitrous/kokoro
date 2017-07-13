@@ -1,7 +1,6 @@
-const fs 		= require('fs'),
-      osuApi    = require('../../utils/node-osu'),
+const osuApi    = require('../../utils/node-osu'),
       util      = require('../../utils/utils.js'),
-      list      = require('../../data/osu_link.json'),
+      list      = require('../../data/link.json'),
       config    = require('../../config.json');
 
 var osu = new osuApi.Api(config.osu_token);
@@ -13,7 +12,6 @@ module.exports = {
     run: (client, msg, args) => {
         var m = msg.mentions.users.first();
         var u = args[1];
-        console.log(args[1])
         if (args[1] === undefined) {
             if (!list[msg.guild.id]) { return };
             if (!list[msg.guild.id][m.id]) { return };

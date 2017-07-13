@@ -1,6 +1,6 @@
 const Discord = require('discord.js'),
       osuApi  = require('../../utils/node-osu'),
-      list    = require('../../data/osu_link.json'),
+      list    = require('../../data/link.json'),
       config  = require('../../config.json'),
       stripIndent   = require('common-tags').stripIndent,
       stripTags     = require('striptags');
@@ -44,9 +44,7 @@ module.exports = {
     run: (client, msg, args) => {
         var m = ModesArg[args[1].toLowerCase()] || '0';
         var u = !args[0].startsWith('<@') ? args[0] : msg.mentions.users.first();
-        if (typeof u == 'object') {
-            u = list[msg.guild.id][u.id].osu;
-        };
+        if (typeof u == 'object') { u = list[msg.guild.id][u.id].osu };
         osu.getUser({u: u, m: m})
             .then(user => {
                 const embed = new Discord.RichEmbed()
