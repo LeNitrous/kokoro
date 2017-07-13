@@ -61,5 +61,5 @@ typings/
 .vscode/
 
 # Application Files
-config.json
+*.json
 *.mp3
