@@ -16,7 +16,7 @@ var dict = {
 }
 
 function replaceAll(str,array){
-    var re = new RegExp(Object.keys(array).join(" |"),"gi");
+    var re = new RegExp(Object.keys(array).join("|"),"gi");
 
     return str.replace(re, function(matched){
         return array[matched.toLowerCase()];
