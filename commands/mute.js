@@ -3,8 +3,8 @@ const fs 		= require('fs'),
       config    = require('../config.json');
 
 module.exports = {
-    help: 'Toggle mute status of the user\'s text chat or voice chat.\nAdd a "-setup" flag to setup roles and permissions.',
-    usage: '<User> "-setup"',
+    help: 'Toggle mute status of the user\'s text chat or voice chat.\nAUse the "-setup" flag to setup roles and permissions.',
+    usage: '<user>',
     serverOnly: true,
     run: (client, msg, args) => {
         var member    = msg.mentions.members.first();

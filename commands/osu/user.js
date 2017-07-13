@@ -15,10 +15,22 @@ var Modes = {
 };
 
 var ModesArg = {
+    'standard': 0,
     'osu': 0,
+    'std': 0,
+    'o': 0,
+    's': 0,  
     'taiko': 1,
+    't': 1,
     'catch': 2,
-    'mania': 3
+    'ctb': 2,
+    'c': 2,
+    'mania': 3,
+    'm': 3,
+    0: 0,
+    1: 1,
+    2: 2,
+    3: 3
 };
 
 // https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
@@ -28,12 +40,12 @@ function formatNumber(x) {
 
 module.exports = {
     help: 'Gets an osu! user profile',
-    usage: '<User> "osu|taiko|catch|mania"',
+    usage: '<user> <osu/taiko/catch/mania>',
     run: (client, msg, args) => {
-        var m = ModesArg[args[1]] || '0';
+        var m = ModesArg[args[1].toLowerCase()] || '0';
         var u = !args[0].startsWith('<@') ? args[0] : msg.mentions.users.first();
         if (typeof u == 'object') {
-            u = list[msg.guild.id][u.id];
+            u = list[msg.guild.id][u.id].osu;
         };
         osu.getUser({u: u, m: m})
             .then(user => {

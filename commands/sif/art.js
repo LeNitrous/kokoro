@@ -1,8 +1,8 @@
 const sif = require('../../utils/node-sif');
 
 module.exports = {
-    help: 'School idol festival Card Art. Add "idolized" flag to show alternate art',
-    usage: '<ID> "idolized"',
+    help: 'School idol festival Card Art. Add "--idolized" flag to show alternate art',
+    usage: '<id>',
     run: (client, msg, args) => {
         var id = args[0];
         var flag = args[1] != undefined ? args[1].toLowerCase() : undefined;
@@ -10,7 +10,7 @@ module.exports = {
         msg.channel.startTyping();
         sif.getCardsByID(id)
         .then(card => {
-            art = flag == "idolized" ? card.card_idolized_image : card.card_image;
+            art = flag == "--idolized" ? card.card_idolized_image : card.card_image;
             art = art == null ? card.card_image : art;
             msg.channel.send('', {files: [{attachment: "https:" + art, name: 'sif_art.jpg'}]})
                 .then(m => {

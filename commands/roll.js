@@ -6,7 +6,7 @@ function getRandomInt(min, max) {
 
 module.exports = {
     help: 'Rolls a dice. Specify values to determine range.',
-    usage: '[Min] [Max]',
+    usage: '<min> <max>',
     ownerOnly: false,
     serverOnly: false,
     run: (client, msg, args) => {

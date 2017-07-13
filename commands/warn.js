@@ -7,7 +7,7 @@ const fs 		= require('fs'),
 
 module.exports = {
     help: 'Warns a user and log it or Check a user\'s warn count.',
-    usage: '<User> "Get|Clear|Set" [Number]',
+    usage: '<mention> <get/set/clear> <number>',
     serverOnly: true,
     run: (client, msg, args) => {
         var user = msg.mentions.users.first();

@@ -5,11 +5,11 @@ const Discord = require('discord.js'),
 
 module.exports = {
     help: 'Search and get anime information through MyAnimeList.',
-    usage: '<Search Term>',
+    usage: '<search term>',
     run: (client, msg, args) => {
         var term = args.join();
         var r = [];
-        if(!Boolean(term)) { return msg.channel.send('\u26A0 \u276f  Specify an anime term to search!') };
+        if(!Boolean(term)) { return msg.channel.send('\u26A0 \u276f  Specify an anime term to search.') };
         msg.channel.startTyping();
         mal.getResultsFromSearch(term).then(items => {
             var a = items.filter(i => {return i.type == 'anime';});
@@ -26,6 +26,7 @@ module.exports = {
                 .then(r => {
                     r.first().delete();
                     msg.guild.me.lastMessage.delete();
+                    msg.author.lastMessage.delete();
                     if (r.first().content.toLowerCase() == "cancel") {return;};
                     var a = items[r.first().content - 1];
                     mal.getInfoFromURI(a).then(anime => {

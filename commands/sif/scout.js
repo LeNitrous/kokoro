@@ -24,7 +24,7 @@ var validScoutTypes = {
 
 module.exports = {
     help: 'School idol festival Scouting Boxes!',
-    usage: '<Box> <Type>\nBoxes can be: "u\'s", "aqours"\nTypes can be: "honor", "honor10", "ticket"',
+    usage: '<box> <type>\nBoxes can be: "u\'s", "aqours"\nTypes can be: "honor", "honor10", "ticket"',
     run: (client, msg, args) => {
 
         var box     = args[0].toLowerCase();
@@ -61,7 +61,7 @@ module.exports = {
                 .end((error, item) => {
                     if (!error && item.status === 200) {
                         var buff = 'http:' + item.body.results[0].card_image;
-                        msg.channel.send('', {files: [{attachment: buff, name: 'sif_scout.jpg'}]})
+                        msg.channel.send('\u2709 \u276f  **${msg.author.username}** scouted:', {files: [{attachment: buff, name: 'sif_scout.jpg'}]})
                     }
                     else
                         msg.channel.send('\u26A0 \u276f  There was a problem getting the cards.');
@@ -111,7 +111,7 @@ module.exports = {
                                             for (var o = 6; o <= 10; o++) {
                                                 ctx.drawImage(c_List[o], 155 + (140 * (o - 6)), 245);
                                             }
-                                            msg.channel.send(`**${msg.author.username}**`, {files: [{attachment: canvas.toBuffer(), name: 'scout_scout10.jpg'}]});
+                                            msg.channel.send(`\u2709 \u276f  **${msg.author.username}** scouted:`, {files: [{attachment: canvas.toBuffer(), name: 'scout_scout10.jpg'}]});
                                             ctx.clearRect(0, 0, canvas.width, canvas.height)
                                         });
                                     };

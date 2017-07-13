@@ -1,6 +1,6 @@
 module.exports = {
     help: 'Sets the bot\'s game and streaming status.',
-    usage: '"<Text>" <Twitch URL>',
+    usage: '<game> <url>',
     ownerOnly: true,
     run: (client, msg, args) => {
         args.join(' ');

@@ -33,7 +33,7 @@ function formatTime(x) {
 
 module.exports = {
     help: 'Gets an osu! beatmap or a beatmap set.',
-    usage: '<Link>',
+    usage: '<mapID/link>',
     run: (client, msg, args) => {
         if (args[0] === undefined ) {util.sendcmdhelp(msg, 'osu map', config.prefix, module.exports.help, module.exports.usage); return;};
         if (args[0].includes('https://osu.ppy.sh/s/')) {

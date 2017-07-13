@@ -1,6 +1,6 @@
 module.exports = {
     help: 'Sets the bot\'s game.',
-    usage: '<Text>',
+    usage: '<game>',
     ownerOnly: true,
     run: (client, msg, args) => {
         var text = args.join(' ');

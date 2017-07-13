@@ -53,7 +53,7 @@ function blockify(string) {
 
 module.exports = {
     help: 'BLOCKIFY TEXT',
-    usage: `<Text>`,
+    usage: `<text>`,
     run: (client, msg, args) => {
         if (!args[0])
             return msg.channel.send('No arguments passed.');

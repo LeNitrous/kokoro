@@ -8,7 +8,7 @@ var filepath = __dirname + '/';
 
 module.exports = {
   help: 'Show list of commands or help for a specific command.',
-  usage: '<Command>|[Number]',
+  usage: '<command/page>',
   run: (client, msg, args) => {
     let cmd = args[0];
     let sub = args[1];

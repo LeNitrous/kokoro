@@ -1,6 +1,6 @@
 module.exports = {
     help: 'Sets the bot\'s username.',
-    usage: '<Text>',
+    usage: '<name>',
     ownerOnly: true,
     run: (client, msg, args) => {
         var text = args.join();

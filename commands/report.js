@@ -5,7 +5,7 @@ const Discord   = require('discord.js'),
 
 module.exports = {
     help: 'Send a report to the bot owner',
-    usage: "<Message>",
+    usage: "<message>",
     run: (client, msg, args) => {
         var text = args.join(" ");
         if(blacklist[msg.author.id]) { return msg.author.send('\u1F6AB \u276f  You are not allowed to send reports.') };

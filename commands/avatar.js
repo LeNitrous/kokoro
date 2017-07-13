@@ -1,6 +1,6 @@
 module.exports = {
-    help: 'Gets a user\'s avatar.',
-    usage: '<User>',
+    help: 'Gets a user\'s avatar. Leave blank to get your avatar.',
+    usage: '<mention>',
     serverOnly: true,
     run: (client, msg, args) => {
         var user        = msg.mentions.users.first() !== undefined ? msg.mentions.users.first() : msg.author;

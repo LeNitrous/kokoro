@@ -1,6 +1,6 @@
 module.exports = {
     help: 'Sets the bot\'s status. Can be "dnd/idle/online/invisible"',
-    usage: '<State>',
+    usage: '<status>',
     ownerOnly: true,
     run: (client, msg, args) => {
         var text = args[0];

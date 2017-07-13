@@ -5,7 +5,7 @@ const Discord = require('discord.js'),
 
 module.exports = {
     help: 'Bandori Cards.',
-    usage: '<ID>',
+    usage: '<id>',
     run: (client, msg, args) => {
         var id= args[0];
         Bandori.getCard(id)

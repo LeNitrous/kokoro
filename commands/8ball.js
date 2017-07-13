@@ -27,6 +27,7 @@ const responses = [
 
 module.exports = {
     help: "The magic 8-ball!",
+    usage: "<question>",
     run: (client, msg, args) => {
         var q = args.join(" ");
         if (!q)

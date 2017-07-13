@@ -19,7 +19,7 @@ function formatTime(x) {
 
 module.exports = {
     help: "School idol festival Song Search.",
-    usage: "<Term>, <Filters>\nFilters are comma separated and can be:\n'a=': Attribute, 'p=': Page",
+    usage: "<term>, <filters>\nFilters are comma separated and can be:\n'a=': Attribute, 'p=': Page",
     run: (client, msg, args) => {
         var term = args.join(' ');
         var r = [];

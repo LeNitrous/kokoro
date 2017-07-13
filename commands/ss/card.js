@@ -5,7 +5,7 @@ const Discord = require('discord.js'),
 
 module.exports = {
     help: 'Starlight Stage Cards.',
-    usage: '<ID>',
+    usage: '<id>',
     run: (client, msg, args) => {
         var id = args[0];
         Deresute.getCard(id)

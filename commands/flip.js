@@ -49,7 +49,7 @@ y : '\u028E',
 
 module.exports = {
     help: 'Flips text upside down!',
-    usage: '<Text>',
+    usage: '<text>',
     run: (client, msg, args) => {
         var text = args.join(" ");
         msg.channel.send(flipString(text));

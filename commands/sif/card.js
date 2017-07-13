@@ -20,7 +20,7 @@ function reverseString(originalString) {
 
 module.exports = {
     help: "School idol festival Card Search.",
-    usage: "<Term/ID> <Filters>\nFilters are comma separated and can be:\n'r=': Rarity, 'a=': Attribute, 's=': Skill, 'p=': Page",
+    usage: "<term/id> <filters>\nFilters are comma separated and can be:\n'r=': Rarity, 'a=': Attribute, 's=': Skill, 'p=': Page",
     run: (client, msg, args) => {
         var term = args.join(' ');
         if (!isNaN(term)) {

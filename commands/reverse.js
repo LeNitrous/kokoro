@@ -4,7 +4,7 @@ function reverse(s){
 
 module.exports = {
     help: '!txet sesreveR',
-    usage: '<Text>',
+    usage: '<text>',
     run: (client, msg, args) => {
         var text = args.join(" ");
         msg.channel.send(reverse(text));

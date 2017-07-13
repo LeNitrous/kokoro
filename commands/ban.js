@@ -2,7 +2,7 @@ const config    = require('../config.json');
 
 module.exports = {
     help: 'Bans a user off your guild.',
-    usage: '<User> "Reason"',
+    usage: '<mention> <reason>',
     serverOnly: true,
     run: (client, msg, args) => { 
         var member = msg.mentions.members.first();

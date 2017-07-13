@@ -32,7 +32,7 @@ function formatTime(date) {
 
 module.exports = {
     help: 'View user information by mentions. Leave empty to view yourself.',
-    usage: '<User>',
+    usage: '<mention>',
     serverOnly: true,
     run: (client, msg, args) => {
         var user        = msg.mentions.users.first() !== undefined ? msg.mentions.users.first() : msg.author;

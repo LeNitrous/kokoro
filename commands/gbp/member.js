@@ -5,7 +5,7 @@ const request = require('then-request'),
 
 module.exports = {
     help: 'Bandori Member Search.',
-    usage: '<Page>',
+    usage: '<page>',
     run: (client, msg, args) => {
         var term = args.join(' ');
         var r = [];

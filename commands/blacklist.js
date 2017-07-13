@@ -2,7 +2,7 @@ const list = require('../data/blacklist.json');
 
 module.exports = {
     help: "Toggle user blacklist from sending reports",
-    usage: "<User ID>",
+    usage: "<user id>",
     ownerOnly: true,
     run: (client, msg, args) => {
         var user = args[0];

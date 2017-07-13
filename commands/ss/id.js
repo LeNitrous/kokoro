@@ -2,7 +2,7 @@ const request = require('superagent');
 
 module.exports = {
     help: 'Fetch Producer Profiles!',
-    usage: '<Game ID>',
+    usage: '<id>',
     run: (client, msg, args) => {
         var game_id = args[0];
         msg.channel.startTyping();

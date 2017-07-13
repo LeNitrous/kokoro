@@ -4,7 +4,7 @@ function checkURL(url) {
 
 module.exports = {
     help: 'Set the bot\'s avatar.',
-    usage: '<URL>',
+    usage: '<url>',
     ownerOnly: true,
     run: (client, msg, args) => {
         var url = args[0];

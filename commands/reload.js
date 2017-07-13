@@ -4,8 +4,8 @@ const fs 	  = require('fs'),
       config  = require('../config.json');
 
 module.exports = {
-    help: 'Reload a module.',
-    usage: '<Module>',
+    help: 'Reload a command.',
+    usage: '<command>',
     ownerOnly: true,
     run: (client, msg, args) => {
         if (args[0] == 'reload') {msg.channel.send('\u26A0 \u276f  You can\'t reload this module.'); return;}

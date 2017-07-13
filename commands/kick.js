@@ -1,8 +1,8 @@
 const config    = require('../config.json');
 
 module.exports = {
-    help: 'Boot a user off your guild.',
-    usage: '<User> "Reason"',
+    help: 'Kick a user off your guild.',
+    usage: '<mention> <reason>',
     serverOnly: true,
     run: (client, msg, args) => {
         var member = msg.mentions.members.first();

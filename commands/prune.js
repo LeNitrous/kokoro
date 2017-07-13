@@ -3,7 +3,7 @@ const util      = require('../utils/utils.js'),
 
 module.exports = {
     help: 'Delete up to 100 messages.',
-    usage: '<Number> "bot/user"',
+    usage: '<number> <bot/mention>',
     serverOnly: true,
     run: (client, msg, args) => {
         var num     = args[0];

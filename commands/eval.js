@@ -9,7 +9,7 @@ function clean(text) {
 
 module.exports = {
     help: 'Evaluate Javascript code.',
-    usage: '<Code>',
+    usage: '<code>',
     ownerOnly: true,
     run: (client, msg, args) => {
         try {

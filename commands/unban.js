@@ -2,7 +2,7 @@ const config    = require('../config.json');
 
 module.exports = {
     help: 'Revokes a ban from a user.',
-    usage: '<User>',
+    usage: '<mention>',
     ownerOnly: true,
     serverOnly: true,
     run: (client, msg, args) => {

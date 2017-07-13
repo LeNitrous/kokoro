@@ -5,7 +5,7 @@ const   Discord = require('discord.js'),
 
 module.exports = {
     help: 'School idol festival Idol Search.',
-    usage: "<Term>, <Filters>\nFilters are comma separated and can be:\n's=': School, 'mu=': Main Unit, 'su=': Sub-Unit, 'p=': Page",
+    usage: "<term/id>, <filters>\nFilters are comma separated and can be:\n's=': School, 'mu=': Main Unit, 'su=': Sub-Unit, 'p=': Page",
     run: (client, msg, args) => {
         var term = args.join(' ');
         var r = [];
