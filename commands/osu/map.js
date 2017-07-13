@@ -31,11 +31,20 @@ function formatTime(x) {
     return out;
 };
 
+// https://stackoverflow.com/questions/1199352/smart-way-to-shorten-long-strings-with-javascript
+function truncate( n, useWordBoundary ){
+    if (this.length <= n) { return this; }
+    var subString = this.substr(0, n-1);
+    return (useWordBoundary 
+       ? subString.substr(0, subString.lastIndexOf(' ')) 
+       : subString) + "...";
+};
+
 module.exports = {
     help: 'Gets an osu! beatmap or a beatmap set.',
     usage: '<mapID/link>',
     run: (client, msg, args) => {
-        if (args[0] === undefined ) {util.sendcmdhelp(msg, 'osu map', config.prefix, module.exports.help, module.exports.usage); return;};
+        if (args[0] === undefined ) { return msg.channel.send('\u26A0 \u276f  Invalid Arguments.') };
         if (args[0].includes('https://osu.ppy.sh/s/')) {
             var s = args[0].includes('https://osu.ppy.sh/s/') ? args[0].replace('https://osu.ppy.sh/s/', '') : args[0];
             s = s.substring(0, s.indexOf('&') != -1 ? s.indexOf('&') : s.length);
@@ -53,8 +62,9 @@ module.exports = {
                         diff.push(`\u2022 [${v.version}](https://osu.ppy.sh/b/${v.id}) (${Number(v.difficulty.rating).toFixed(2)}\u2606)`);
                     });
                     //
+                    var title = bms.artist + ' - ' + bms.title
                     const embed = new Discord.RichEmbed()
-                        .setAuthor(`${Status[bms.approvalStatus]} ${bms.artist} - ${bms.title}`, ``, `https://osu.ppy.sh/s/${bms.beatmapSetId}`)
+                        .setAuthor(`${Status[bms.approvalStatus]} ${truncate.apply(title, [60, true])}`, ``, `https://osu.ppy.sh/s/${bms.beatmapSetId}`)
                         .setThumbnail(`https://b.ppy.sh/thumb/${bms.beatmapSetId}l.jpg`)
                         .setDescription(`by ${bms.creator}`)
                         .setColor([187, 17, 119])
