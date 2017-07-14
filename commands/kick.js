@@ -10,6 +10,7 @@ module.exports = {
         var text = args.join(" ");
         if (!msg.guild.me.hasPermission("KICK_MEMBERS")) { return msg.channel.send(config.replySet.noPermsBot) };
         if (!msg.member.hasPermission("KICK_MEMBERS")) { return msg.channel.send(config.replySet.noPermsUser) };
+        if (msg.member.highestRole.position <= member.highestRole.position) { return msg.channel.send(config.replySet.noPermsUser) };
         if (member === undefined) { return msg.channel.send('\u26A0 \u276f  Specify a user to kick.') };
         if (text.length <= 0) {text = 'No reason specificed.'};
         if (member == msg.author.id) { return msg.channel.send(`\u26A0 \u276f  You can't kick yourself!`) };

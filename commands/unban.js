@@ -7,8 +7,9 @@ module.exports = {
     serverOnly: true,
     run: (client, msg, args) => {
         var user      = args.join(' ');
-        if (user === undefined) { return util.sendcmdhelp(msg, 'unban', config.prefix, module.exports.help, module.exports.usage) };
         if (!msg.guild.me.hasPermission("BAN_MEMBERS")) { return msg.channel.send(config.replySet.noPermsBot) };
+        if (!msg.member.hasPermission("BAN_MEMBERS")) { return msg.channel.send(config.replySet.noPermsUser) };
+        if (user === undefined) { return msg.channel.send('\u26A0 \u276f  Specify a user to unban.') };
         msg.guild.fetchBans()
             .then(u => {
                 var target = u.findKey('username', user);

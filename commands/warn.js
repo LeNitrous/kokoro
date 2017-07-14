@@ -12,6 +12,7 @@ module.exports = {
     run: (client, msg, args) => {
         var user = msg.mentions.users.first();
         if (!msg.member.hasPermission("KICK_MEMBERS")) { return msg.channel.send(config.replySet.noPermsBot) };
+        if (msg.member.highestRole.position <= member.highestRole.position) { return msg.channel.send(config.replySet.noPermsUser) };
         if (!args[0]) { return msg.channel.send('\u26A0 \u276f  Specify a user to warn.') };
 
         if (args[1] !== undefined) {

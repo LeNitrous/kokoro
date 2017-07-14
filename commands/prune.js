@@ -12,21 +12,18 @@ module.exports = {
         if (!msg.member.hasPermission("MANAGE_MESSAGES")) { return msg.channel.send(config.replySet.noPermsUser) };
         if (isNaN(num)) {msg.channel.send('\u26A0 \u276f  Specify the number of messages to delete.'); return;}
         if (user !== undefined) {
-            if (user.toLowerCase() == 'bot') {
-                user = msg.guild.me.id
-            } else if (user.startsWith('<@')) {
-                if (user.startsWith('<@&')) { return msg.channel.send('\u26A0 \u276f  Specify a user.') };
-                user = msg.mentions.members.first().id
-            } else {
-                msg.channel.send('\u26A0 \u276f  Specify a user.');
-                return;
+            if (user.toLowerCase() == 'bot') { user = msg.guild.me }
+            else if (user.match(/<@[\d]+>/g) || args[0].match(/<@![\d]+>/g)) { 
+                user = msg.mentions.members.first()
             }
+            else { return msg.channel.send('\u26A0 \u276f  Specify a user.') };
+            if (msg.member.highestRole.position <= user.highestRole.positon && msg.member.id != user.id) { return msg.channel.send(config.replySet.noPermsUser) };
         }
-        if (num > 100) {num = 100}
+        if (num > 100) { num = 100 }
         msg.channel.fetchMessages({limit: num})
             .then(messages => {
-                console.log(`Deleting ${num} messages in #${msg.channel.name} ${Boolean(user) ? `by ${msg.mentions.members.first().displayName}` : '' }...`)
-                msg.channel.bulkDelete(user === undefined ? messages : messages.filter(u=>u.member.id == user))
+                console.log(`Deleting ${num} messages in #${msg.channel.name} ${Boolean(user) ? `by ${user.user.username}` : '' }...`)
+                msg.channel.bulkDelete(user.id === undefined ? messages : messages.filter(u=>u.member.id == user.id))
                     .then(res => {}, err => {},
                         msg.channel.send(`\u1F4A1 \u276f  Deleting ${num} messages.`)
                             .then(message => message.delete(3000)

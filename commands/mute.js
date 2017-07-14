@@ -29,6 +29,8 @@ module.exports = {
         };
 
         if (member.id == client.user.id) { return msg.channel.send('\u26A0 \u276f  You can\'t mute me.') };
+        if (msg.member.id == member.id) { return msg.channel.send('\u26A0 \u276f  You can\'t mute yourself.') };
+        if (msg.member.highestRole.position <= member.highestRole.position) { return msg.channel.send(config.replySet.noPermsUser) };
 
         if (!msg.guild.roles.exists("name", "Muted")) {
             msg.channel.send('\u26A0 \u276f  The server has no **Muted** role.');
