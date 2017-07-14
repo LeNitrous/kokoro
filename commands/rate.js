@@ -28,7 +28,7 @@ module.exports = {
     serverOnly: false,
     run: (client, msg, args) => {
         var q = !args[0].match(/<@[\d]+>/g) || !args[0].match(/<@![\d]+>/g) ? args.join(" ") : msg.mentions.users.first();
-        if (q === undefined) { return msg.channel.send('\u26A0 \u276f  Give me something to rate.')}
+        if (q === undefined) { return msg.channel.send('\u26A0 \u276f  Give me something to rate.') };
         var r = getRandomInt(0, 10);
         if (typeof q == 'object') { if (q.id == client.user.id) { r = 10; q = 'myself' } };
         if (typeof q == 'object') { if (q.id == config.ownerID) { r = 10; q = q.username + '-sama' } };

@@ -65,6 +65,7 @@ module.exports = {
         if (!args[0])
             return msg.channel.send('\u26A0 \u276f  Invalid argument.');
         if (args[0].match(/<:[\w]+:[\d]+>/g)) {
+            msg.channel.startTyping();
             var emoji_id = args[0].match(/[0-9]/g).join("");
             var emoji = msg.guild.emojis.find('id', emoji_id);
             var enlarged = new Image;
@@ -73,6 +74,7 @@ module.exports = {
                 enlarged.src = body;
                 ctx.drawImage(enlarged, 0, 0, 512, 512);
                 msg.channel.send(``, {files: [{attachment: canvas.toBuffer(), name: `${emoji.name}_enlarged.jpg`}]});
+                msg.channel.stopTyping();
                 ctx.clearRect(0, 0, canvas.width, canvas.height)
             });
             return;

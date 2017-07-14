@@ -61,7 +61,7 @@ module.exports = {
                 .end((error, item) => {
                     if (!error && item.status === 200) {
                         var buff = 'http:' + item.body.results[0].card_image;
-                        msg.channel.send('\u2709 \u276f  **${msg.author.username}** scouted:', {files: [{attachment: buff, name: 'sif_scout.jpg'}]})
+                        msg.channel.send(`\u2709 \u276f  **${msg.author.username}** scouted:`, {files: [{attachment: buff, name: 'sif_scout.jpg'}]})
                     }
                     else
                         msg.channel.send('\u26A0 \u276f  There was a problem getting the cards.');
