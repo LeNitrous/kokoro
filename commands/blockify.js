@@ -73,6 +73,7 @@ module.exports = {
                 enlarged.src = body;
                 ctx.drawImage(enlarged, 0, 0, 512, 512);
                 msg.channel.send(``, {files: [{attachment: canvas.toBuffer(), name: `${emoji.name}_enlarged.jpg`}]});
+                ctx.clearRect(0, 0, canvas.width, canvas.height)
             });
             return;
         };

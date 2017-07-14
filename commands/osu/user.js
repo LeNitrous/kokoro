@@ -42,8 +42,10 @@ module.exports = {
     help: 'Gets an osu! user profile',
     usage: '<user> <osu/taiko/catch/mania>',
     run: (client, msg, args) => {
-        var m = ModesArg[args[1].toLowerCase()] || '0';
-        var u = !args[0].startsWith('<@') ? args[0] : msg.mentions.users.first();
+        var m = isNaN(args[1]) ? ModesArg[args[1].toLowerCase()] : 0;
+        var u = args[0];
+        if (u === undefined) { u = msg.author }
+        else if (u.match(/<@[\d]+>/g)) { u = msg.mentions.users.first() };
         if (typeof u == 'object') { u = list[msg.guild.id][u.id].osu };
         osu.getUser({u: u, m: m})
             .then(user => {
