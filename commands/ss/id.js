@@ -7,7 +7,7 @@ module.exports = {
     run: (client, msg, args) => {
         var u = args[0];
         if (u === undefined) { u = msg.author }
-        else if (u.match(/<@[\d]+>/g)) { u = msg.mentions.users.first() };
+        else if (u.match(/<@[\d]+>/g) || u.match(/<@![\d]+>/g)) { u = msg.mentions.users.first() };
         if (typeof u == 'object') { u = list[msg.guild.id][u.id].deresute };
         msg.channel.startTyping();
         request.get(`https://deresute.me/${u}/large`)

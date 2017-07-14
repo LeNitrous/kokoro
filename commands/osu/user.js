@@ -45,7 +45,7 @@ module.exports = {
         var m = isNaN(args[1]) ? ModesArg[args[1].toLowerCase()] : 0;
         var u = args[0];
         if (u === undefined) { u = msg.author }
-        else if (u.match(/<@[\d]+>/g)) { u = msg.mentions.users.first() };
+        else if (u.match(/<@[\d]+>/g) || u.match(/<@![\d]+>/g)) { u = msg.mentions.users.first() };
         if (typeof u == 'object') { u = list[msg.guild.id][u.id].osu };
         osu.getUser({u: u, m: m})
             .then(user => {

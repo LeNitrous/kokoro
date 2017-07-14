@@ -9,8 +9,6 @@ module.exports = {
     run: (client, msg, args) => {
         var member    = msg.mentions.members.first();
         var flags = args.join(" ");
-        if (!msg.guild.me.hasPermission("MANAGE_CHANNELS")) { return msg.channel.send(config.replySet.noPermsBot) };
-        if (!msg.member.hasPermission("MANAGE_CHANNELS")) { return msg.channel.send(config.replySet.noPermsUser) };
         if (!msg.guild.me.hasPermission("MANAGE_ROLES")) { return msg.channel.send(config.replySet.noPermsBot) };
         if (!msg.member.hasPermission("MANAGE_ROLES")) { return msg.channel.send(config.replySet.noPermsUser) };
         if (flags.includes("-setup")) {
