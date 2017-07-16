@@ -42,7 +42,7 @@ module.exports = {
     help: 'Gets an osu! user profile',
     usage: '<user> <osu/taiko/catch/mania>',
     run: (client, msg, args) => {
-        var m = isNaN(args[1]) ? ModesArg[args[1].toLowerCase()] : 0;
+        var m = isNaN(args[1]) && args[1] ? ModesArg[args[1].toLowerCase()] : 0;
         var u = args[0];
         if (u === undefined) { u = msg.author }
         else if (u.match(/<@[\d]+>/g) || u.match(/<@![\d]+>/g)) { u = msg.mentions.users.first() };
