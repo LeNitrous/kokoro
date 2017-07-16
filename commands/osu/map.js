@@ -97,8 +97,9 @@ module.exports = {
             osu.getBeatmaps({b: b})
                 .then(beatmap => {
                     var bm = beatmap[0];
+                    var title = bm.artist + ' - ' + bm.title
                     const embed = new Discord.RichEmbed()
-                        .setAuthor(`${Status[bm.approvalStatus]} ${bm.artist} - ${bm.title} [${bm.version}]`, ``, `https://osu.ppy.sh/s/${bm.beatmapSetId}`)
+                        .setAuthor(`${Status[bm.approvalStatus]} ${truncate.apply(title, [75, true])} [${bm.version}]`, ``, `https://osu.ppy.sh/s/${bm.beatmapSetId}`)
                         .setThumbnail(`https://b.ppy.sh/thumb/${bm.beatmapSetId}l.jpg`)
                         .setDescription(`by ${bm.creator}`)
                         .setColor([187, 17, 119])
