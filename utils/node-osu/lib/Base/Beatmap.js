@@ -20,6 +20,7 @@ class Beatmap {
 		this.mode = Constants.Beatmaps.mode[data.mode];
 		this.tags = data.tags.split(' ');
 		this.approvalStatus = Constants.Beatmaps.approved[data.approved];
+		this.raw_mode = data.mode;
 		this.raw_approvedDate = data.approved_date;
 		this.raw_lastUpdate = data.last_update;
 		this.beatmapSetId = data.beatmapset_id;

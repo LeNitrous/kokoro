@@ -29,11 +29,11 @@ Bot.on('message', (message) => {
 	let file;
 	let args;
 
-	if (message.content.startsWith('https://osu.ppy.sh/s/') || message.content.startsWith('https://osu.ppy.sh/b/')) {
+	if (message.content.includes('https://osu.ppy.sh/s/') || message.content.includes('https://osu.ppy.sh/b/')) {
 		if (!require('./data/guildSettings.json')[message.guild.id].osuBeatmapDetect) return;
 		var osuBeatmapCommand = require('./commands/osu/map.js');
 		args = [];
-		args[0] = message.content;
+		args[0] = message.content.match(/https:\/\/osu\.ppy\.sh\/(s|b)\/[\d]*/)[0];
 		osuBeatmapCommand.run(Bot, message, args);
 		return;
 	};

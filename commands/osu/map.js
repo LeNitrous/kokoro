@@ -9,12 +9,12 @@ var osu = new osuApi.Api(config.osu_token);
 
 var Status = {
     "Graveyard": '',
-    "WIP": '\u2754',
-    "Pending": '\u2754',
-    "Qualified": '\u2705',
-    "Ranked": '\u2B06',
-    "Approved": '\uD83D\uDD25',
-    "Loved": '\u2764'
+    "WIP": ':grey_question:',
+    "Pending": ':grey_question:',
+    "Qualified": ':white_check_mark:',
+    "Ranked": ':arrow_up_small:',
+    "Approved": ':fire:',
+    "Loved": ':heart:'
 };
 
 function formatTime(x) {
@@ -54,19 +54,26 @@ module.exports = {
                     var diff = [];
                     function sortDiffs (a, b) {
                         if (a.difficulty.rating < b.difficulty.rating) return -1;
+                        if (a.raw_mode < b.raw_mode) return -1;
                         if (a.difficulty.rating > b.difficulty.rating) return 1;
+                        if (a.raw_mode > b.raw_mode) return 1;
                         return 0;
                     };
                     bms.difficulty.sort(sortDiffs);
                     bms.difficulty.forEach(v => {
-                        diff.push(`\u2022 [${v.version}](https://osu.ppy.sh/b/${v.id}) (${Number(v.difficulty.rating).toFixed(2)}\u2606)`);
+                        diff.push(`\u2022 [${Discord.Util.escapeMarkdown(v.version)}](https://osu.ppy.sh/b/${v.id}) (${Number(v.difficulty.rating).toFixed(2)}\u2606)`);
                     });
+                    if (diff.length > 8) {
+                        diff.splice(8, bms.difficulty.length);
+                        diff.push(`...and ${bms.difficulty.length - 8} more difficulties!`)
+                    }
                     //
                     var title = bms.artist + ' - ' + bms.title
                     const embed = new Discord.RichEmbed()
-                        .setAuthor(`${Status[bms.approvalStatus]} ${truncate.apply(title, [60, true])}`, ``, `https://osu.ppy.sh/s/${bms.beatmapSetId}`)
+                        .setTitle(`${Status[bms.approvalStatus]} ${truncate.apply(title, [60, true])}`)
+                        .setURL(`https://osu.ppy.sh/s/${bms.beatmapSetId}`)
                         .setThumbnail(`https://b.ppy.sh/thumb/${bms.beatmapSetId}l.jpg`)
-                        .setDescription(`by ${bms.creator}`)
+                        .setDescription(`by [${Discord.Util.escapeMarkdown(bms.creator)}](https://osu.ppy.sh/users/${bms.creator})`)
                         .setColor([187, 17, 119])
                         .addField('Song Details', stripIndent`
                         \u2022 Source: ${bms.source}
@@ -79,15 +86,13 @@ module.exports = {
                         .addField('Difficulties', diff.join('\n'))
                         .addField('Downloads', stripIndent`
                         \u2022 [Download](https://osu.ppy.sh/d/${bms.beatmapSetId})
-                        \u2022 [Download without Video](https://osu.ppy.sh/d/${bms.beatmapSetId}n)
                         \u2022 [Download with osu!direct](osu://dl/${bms.beatmapSetId})
                         `);
                     msg.channel.send({embed});
                 })
                 .catch(err => {
                     console.log(err.stack);
-                    if (err.name == 'RangeError') {msg.channel.send('Cannot parse this beatmap.'); return;};
-                    if (err.message == 'Beatmap Set not found') {msg.channel.send('\u26A0 \u276f  Beatmap Set not found.'); return;};
+                    if (err.message == 'Beatmap Set not found') { return msg.channel.send('\u26A0 \u276f  Beatmap Set not found.') };
                     msg.channel.send(config.replySet.error);
                 });
         }
@@ -99,9 +104,10 @@ module.exports = {
                     var bm = beatmap[0];
                     var title = bm.artist + ' - ' + bm.title
                     const embed = new Discord.RichEmbed()
-                        .setAuthor(`${Status[bm.approvalStatus]} ${truncate.apply(title, [75, true])} [${bm.version}]`, ``, `https://osu.ppy.sh/s/${bm.beatmapSetId}`)
+                        .setTitle(`${Status[bm.approvalStatus]} ${truncate.apply(title, [60, true])}`)
+                        .setURL(`https://osu.ppy.sh/s/${bm.beatmapSetId}`)
                         .setThumbnail(`https://b.ppy.sh/thumb/${bm.beatmapSetId}l.jpg`)
-                        .setDescription(`by ${bm.creator}`)
+                        .setDescription(`${Discord.Util.escapeMarkdown(bm.version)} by [${Discord.Util.escapeMarkdown(bm.creator)}](https://osu.ppy.sh/users/${bm.creator})`)
                         .setColor([187, 17, 119])
                         .addField('Song Details', stripIndent`
                         \u2022 Source: ${bm.source}
@@ -115,7 +121,6 @@ module.exports = {
                         `)
                         .addField('Downloads', stripIndent`
                         \u2022 [Download](https://osu.ppy.sh/d/${bm.beatmapSetId})
-                        \u2022 [Download without Video](https://osu.ppy.sh/d/${bm.beatmapSetId}n)
                         \u2022 [Download with osu!direct](osu://dl/${bm.beatmapSetId})
                         `);
                     msg.channel.send({embed});

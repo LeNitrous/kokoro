@@ -16,7 +16,6 @@ class BeatmapSet{
         this.language = Constants.Beatmaps.language[data[0].language_id];
 
         this.bpm = data[0].bpm;
-        this.mode = Constants.Beatmaps.mode[data[0].mode];
         this.tags = data[0].tags.split(' ');
         this.approvalStatus = Constants.Beatmaps.approved[data[0].approved];
         this.raw_approvedDate = data[0].approved_date;
