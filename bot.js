@@ -30,7 +30,8 @@ Bot.on('message', (message) => {
 	let args;
 
 	if (message.content.includes('https://osu.ppy.sh/s/') || message.content.includes('https://osu.ppy.sh/b/')) {
-		if (!require('./data/guildSettings.json')[message.guild.id].hasOwnPropterty('osuBeatmapDetect')) return;
+		var allowBeatmapDetect = require('./data/guildSettings.json')[message.guild.id].osuBeatmapDetect;
+		if (!allowBeatmapDetect) return;
 		var osuBeatmapCommand = require('./commands/osu/map.js');
 		args = [];
 		args[0] = message.content.match(/https:\/\/osu\.ppy\.sh\/(s|b)\/[\d]*/)[0];
