@@ -83,6 +83,7 @@ Bot.on('guildMemberAdd', (member) => {
 	const log = new Discord.RichEmbed()
 		.setAuthor(member.user.tag, member.user.displayAvatarURL)
 		.setTimestamp(new Date())
+		.setColor([65, 163, 244])
 		.setFooter('User Joined')
 	member.guild.channels.find('id', eventLogChannel).send({embed: log});
 });
@@ -93,6 +94,7 @@ Bot.on('guildMemberRemove', (member) => {
 	const log = new Discord.RichEmbed()
 		.setAuthor(member.user.tag, member.user.displayAvatarURL)
 		.setTimestamp(new Date())
+		.setColor([244, 66, 66])
 		.setFooter('User Left')
 	member.guild.channels.find('id', eventLogChannel).send({embed: log});
 });

@@ -25,6 +25,7 @@ module.exports = {
             if (!eventLogChannel) return;
             const log = new Discord.RichEmbed()
                 .setAuthor(msg.author.tag, msg.author.displayAvatarURL)
+                .setColor([244, 178, 65])
                 .setDescription(stripIndent`
                 \u2022 **Member:** ${member.user.tag}
                 \u2022 **Reason:** ${text}
