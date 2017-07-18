@@ -30,6 +30,7 @@ Bot.on('message', (message) => {
 	let args;
 
 	if (message.content.includes('https://osu.ppy.sh/s/') || message.content.includes('https://osu.ppy.sh/b/')) {
+		if (!require('./data/guildSettings.json')[message.guild.id]) return;
 		var allowBeatmapDetect = require('./data/guildSettings.json')[message.guild.id].osuBeatmapDetect;
 		if (!allowBeatmapDetect) return;
 		var osuBeatmapCommand = require('./commands/osu/map.js');
@@ -79,6 +80,7 @@ Bot.on('message', (message) => {
 });
 
 Bot.on('guildMemberAdd', (member) => {
+	if (!require('./data/guildSettings.json')[message.guild.id]) return;
 	var eventLogChannel = require('./data/guildSettings.json')[member.guild.id].guildEventLogChannel;
 	if (!eventLogChannel) return;
 	const log = new Discord.RichEmbed()
@@ -90,6 +92,7 @@ Bot.on('guildMemberAdd', (member) => {
 });
 
 Bot.on('guildMemberRemove', (member) => {
+	if (!require('./data/guildSettings.json')[message.guild.id]) return;
 	var eventLogChannel = require('./data/guildSettings.json')[member.guild.id].guildEventLogChannel;
 	if (!eventLogChannel) return;
 	const log = new Discord.RichEmbed()
