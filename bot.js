@@ -76,3 +76,23 @@ Bot.on('message', (message) => {
 		message.channel.send(config.replySet.error);
 	}
 });
+
+Bot.on('guildMemberAdd', (member) => {
+	var eventLogChannel = require('./data/guildSettings.json')[member.guild.id].guildEventLogChannel;
+	if (!eventLogChannel) return;
+	const log = new Discord.RichEmbed()
+		.setAuthor(member.user.tag, member.user.displayAvatarURL)
+		.setTimestamp(new Date())
+		.setFooter('User Joined')
+	member.guild.channels.find('id', eventLogChannel).send({embed: log});
+});
+
+Bot.on('guildMemberRemove', (member) => {
+	var eventLogChannel = require('./data/guildSettings.json')[member.guild.id].guildEventLogChannel;
+	if (!eventLogChannel) return;
+	const log = new Discord.RichEmbed()
+		.setAuthor(member.user.tag, member.user.displayAvatarURL)
+		.setTimestamp(new Date())
+		.setFooter('User Left')
+	member.guild.channels.find('id', eventLogChannel).send({embed: log});
+});

@@ -1,5 +1,7 @@
 const fs 		= require('fs'),
       util      = require('../utils/utils.js'),
+      Discord	= require('discord.js'),
+      stripIndent   = require('common-tags').stripIndent,
       config    = require('../config.json');
 
 module.exports = {
@@ -9,8 +11,8 @@ module.exports = {
     run: (client, msg, args) => {
         var member    = msg.mentions.members.first();
         var flags = args.join(" ");
-        if (!msg.guild.me.hasPermission("MANAGE_ROLES")) { return msg.channel.send(config.replySet.noPermsBot) };
-        if (!msg.member.hasPermission("MANAGE_ROLES")) { return msg.channel.send(config.replySet.noPermsUser) };
+        if (!msg.guild.me.hasPermission("MUTE_MEMBERS")) { return msg.channel.send(config.replySet.noPermsBot) };
+        if (!msg.member.hasPermission("MUTE_MEMBERS")) { return msg.channel.send(config.replySet.noPermsUser) };
         if (flags.includes("-setup")) {
             if (msg.guild.roles.exists("name", "Muted")) {
                 msg.channel.send('\u26A0 \u276f  The server already has this role.');
@@ -40,10 +42,30 @@ module.exports = {
         if (Boolean(member) && !member.roles.exists("name", "Muted")) {
             member.addRole(msg.guild.roles.find("name", "Muted"));
             msg.channel.send(`\uD83D\uDD07 \u276f  **${member.user.username}** is now silenced.`);
+            var eventLogChannel = require('../data/guildSettings.json')[member.guild.id].guildEventLogChannel;
+            if (!eventLogChannel) return;
+            const log = new Discord.RichEmbed()
+                .setAuthor(msg.author.tag, msg.author.displayAvatarURL)
+                .setDescription(stripIndent`
+                \u2022 **Member:** ${member.user.tag}
+                `)
+                .setTimestamp(new Date())
+                .setFooter('User Muted');
+            msg.guild.channels.find('id', eventLogChannel).send({embed: log});
         }
         else if (Boolean(member) && member.roles.exists("name", "Muted")) {
             member.removeRole(msg.guild.roles.find("name", "Muted"));
             msg.channel.send(`\uD83D\uDD09 \u276f  **${member.user.username}** is now unsilenced.`);
+            var eventLogChannel = require('../data/guildSettings.json')[member.guild.id].guildEventLogChannel;
+            if (!eventLogChannel) return;
+            const log = new Discord.RichEmbed()
+                .setAuthor(msg.author.tag, msg.author.displayAvatarURL)
+                .setDescription(stripIndent`
+                \u2022 **Member:** ${member.user.tag}
+                `)
+                .setTimestamp(new Date())
+                .setFooter('User Unmuted');
+            msg.guild.channels.find('id', eventLogChannel).send({embed: log});
         }
         else {
             msg.channel.send('\u26A0 \u276f  Specify a user to mute.');

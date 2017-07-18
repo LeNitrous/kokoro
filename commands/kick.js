@@ -1,4 +1,6 @@
-const config    = require('../config.json');
+const config    = require('../config.json'),
+      Discord	= require('discord.js'),
+      stripIndent   = require('common-tags').stripIndent;
 
 module.exports = {
     help: 'Kick a user off your guild.',
@@ -17,8 +19,19 @@ module.exports = {
         if (member.kickable) {
             member.user.send(`You have been kicked off from **${msg.guild.name}** by **${msg.author.username}**.\n\n**Reason:** ${text}`)
                .catch(console.error);
-            msg.channel.send(`\u1F462 \u276f  Kicked **${member.user.username}**..\n\n**Reason:** ${text}`);
+            msg.channel.send(`:boot: \u276f  Kicked **${member.user.username}**..\n\n**Reason:** ${text}`);
             member.kick({reason: text});
+            var eventLogChannel = require('../data/guildSettings.json')[member.guild.id].guildEventLogChannel;
+            if (!eventLogChannel) return;
+            const log = new Discord.RichEmbed()
+                .setAuthor(msg.author.tag, msg.author.displayAvatarURL)
+                .setDescription(stripIndent`
+                \u2022 **Member:** ${member.user.tag}
+                \u2022 **Reason:** ${text}
+                `)
+                .setTimestamp(new Date())
+                .setFooter('User Kicked');
+            msg.guild.channels.find('id', eventLogChannel).send({embed: log});
         }
         else {
             msg.channel.send(`\u26A0 \u276f  **${member.user.username}** can't be kicked.`);
