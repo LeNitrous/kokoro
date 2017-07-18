@@ -13,7 +13,7 @@ module.exports = {
         if (isNaN(num)) {msg.channel.send('\u26A0 \u276f  Specify the number of messages to delete.'); return;}
         if (user !== undefined) {
             if (user.toLowerCase() == 'bot') { user = msg.guild.me }
-            else if (user.match(/<@[\d]+>/g) || args[0].match(/<@![\d]+>/g)) { 
+            else if (user.match(/<@[\d]+>/g) || user.match(/<@![\d]+>/g)) { 
                 user = msg.mentions.members.first()
             }
             else { return msg.channel.send('\u26A0 \u276f  Specify a user.') };
@@ -22,11 +22,11 @@ module.exports = {
         if (num > 100) { num = 100 }
         msg.channel.fetchMessages({limit: num})
             .then(messages => {
-                console.log(`Deleting ${num} messages in #${msg.channel.name} ${Boolean(user) ? `by ${user.user.username}` : '' }...`)
-                msg.channel.bulkDelete(user.id === undefined ? messages : messages.filter(u=>u.member.id == user.id))
+                console.log(`Deleting ${num} messages in #${msg.channel.name}${Boolean(user) ? ` by ${user.user.username}` : '' }...`)
+                msg.channel.bulkDelete(user === undefined ? messages : messages.filter(u=>u.member.id == user.id))
                     .then(res => {}, err => {},
-                        msg.channel.send(`\u1F4A1 \u276f  Deleting ${num} messages.`)
-                            .then(message => message.delete(3000)
+                        msg.channel.send(`:wastebasket: \u276f  Deleting ${num} messages${Boolean(user) ? ` by ${user.user.username}` : '' }.`)
+                            .then(message => message.delete(1500)
                             .catch(err => console.log(err)), err => console.log(err)));
             }, err => {console.log(err)})
     }
