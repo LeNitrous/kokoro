@@ -80,7 +80,7 @@ Bot.on('message', (message) => {
 });
 
 Bot.on('guildMemberAdd', (member) => {
-	if (!require('./data/guildSettings.json')[message.guild.id]) return;
+	if (!require('./data/guildSettings.json')[member.guild.id]) return;
 	var eventLogChannel = require('./data/guildSettings.json')[member.guild.id].guildEventLogChannel;
 	if (!eventLogChannel) return;
 	const log = new Discord.RichEmbed()
@@ -92,7 +92,7 @@ Bot.on('guildMemberAdd', (member) => {
 });
 
 Bot.on('guildMemberRemove', (member) => {
-	if (!require('./data/guildSettings.json')[message.guild.id]) return;
+	if (!require('./data/guildSettings.json')[member.guild.id]) return;
 	var eventLogChannel = require('./data/guildSettings.json')[member.guild.id].guildEventLogChannel;
 	if (!eventLogChannel) return;
 	const log = new Discord.RichEmbed()
@@ -101,4 +101,22 @@ Bot.on('guildMemberRemove', (member) => {
 		.setColor([244, 66, 66])
 		.setFooter('User Left')
 	member.guild.channels.find('id', eventLogChannel).send({embed: log});
+});
+
+Bot.on('messageReactionAdd', (react, user) => {
+	if (!require('./data/guildSettings.json')[react.message.guild.id]) return;
+	var guildStarredMessageChannel = require('./data/guildSettings.json')[react.message.guild.id].guildStarredMessageChannel;
+	if (!guildStarredMessageChannel) return;
+	if (!react.message.guild.members.find('id', user.id).hasPermission('MANAGE_MESSAGES')) return;
+	if (react.emoji.name != '\u2B50') return;
+	const pin = new Discord.RichEmbed()
+		.setAuthor(user.tag, user.displayAvatarURL)
+		.setTimestamp(new Date())
+		.setDescription(react.message.content)
+		.setColor([255, 221, 8])
+		.setFooter('\u2B50');
+	var a = react.message.attachments.first();
+	if (a && a.height && a.width) {pin.setImage(a.url)};
+	if (a && a.height == undefined && a.width == undefined) {pin.addField('File', `[${a.filename}](${a.url})`)};
+	react.message.guild.channels.find('id', guildStarredMessageChannel).send({embed: pin});
 });

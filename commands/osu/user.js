@@ -17,20 +17,11 @@ var Modes = {
 var ModesArg = {
     'standard': 0,
     'osu': 0,
-    'std': 0,
-    'o': 0,
-    's': 0,  
+    'std': 0,  
     'taiko': 1,
-    't': 1,
     'catch': 2,
     'ctb': 2,
-    'c': 2,
     'mania': 3,
-    'm': 3,
-    0: 0,
-    1: 1,
-    2: 2,
-    3: 3
 };
 
 // https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
@@ -42,8 +33,15 @@ module.exports = {
     help: 'Gets an osu! user profile',
     usage: '<user> <osu/taiko/catch/mania>',
     run: (client, msg, args) => {
-        var m = isNaN(args[1]) && args[1] ? ModesArg[args[1].toLowerCase()] : 0;
-        var u = args[0];
+        /*
+        var input = args.join(" ").split(",");
+        var u = input[0] != '' ? input[0] : msg.author;
+        var m = input[1] != undefined ? input[1].trim() : 0;
+        if ((u.match(/<@[\d]+>/g) || u.match(/<@![\d]+>/g)) && u != '') { u = msg.mentions.users.first() };
+        console.log(`user: ${u}, mode: ${m}`)
+        */
+        var u = args.join(" ");
+        var m = 0;
         if (u === undefined) { u = msg.author }
         else if (u.match(/<@[\d]+>/g) || u.match(/<@![\d]+>/g)) { u = msg.mentions.users.first() };
         if (typeof u == 'object') { u = list[msg.guild.id][u.id].osu };

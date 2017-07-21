@@ -70,10 +70,10 @@ module.exports = {
                     //
                     var title = bms.artist + ' - ' + bms.title
                     const embed = new Discord.RichEmbed()
-                        .setTitle(`${Status[bms.approvalStatus]} ${truncate.apply(Discord.Util.escapeMarkdown(title), [70, true])}`)
+                        .setTitle(`${Status[bms.approvalStatus]} ${truncate.apply(Discord.Util.escapeMarkdown(title), [60, true])}`)
                         .setURL(`https://osu.ppy.sh/s/${bms.beatmapSetId}`)
                         .setThumbnail(`https://b.ppy.sh/thumb/${bms.beatmapSetId}l.jpg`)
-                        .setDescription(`by [${Discord.Util.escapeMarkdown(bms.creator)}](https://osu.ppy.sh/users/${bms.creator})`)
+                        .setDescription(`by [${Discord.Util.escapeMarkdown(bms.creator)}](https://osu.ppy.sh/users/${bms.creator.replace(/ /g, "_")})`)
                         .setColor([187, 17, 119])
                         .addField('Song Details', stripIndent`
                         \u2022 Source: ${bms.source}
@@ -104,10 +104,10 @@ module.exports = {
                     var bm = beatmap[0];
                     var title = bm.artist + ' - ' + bm.title
                     const embed = new Discord.RichEmbed()
-                        .setTitle(`${Status[bm.approvalStatus]} ${truncate.apply(Discord.Util.escapeMarkdown(title), [70, true])}`)
+                        .setTitle(`${Status[bm.approvalStatus]} ${truncate.apply(Discord.Util.escapeMarkdown(title), [60, true])}`)
                         .setURL(`https://osu.ppy.sh/s/${bm.beatmapSetId}`)
                         .setThumbnail(`https://b.ppy.sh/thumb/${bm.beatmapSetId}l.jpg`)
-                        .setDescription(`${Discord.Util.escapeMarkdown(bm.version)} by [${Discord.Util.escapeMarkdown(bm.creator)}](https://osu.ppy.sh/users/${bm.creator})`)
+                        .setDescription(`${Discord.Util.escapeMarkdown(bm.version)} by [${Discord.Util.escapeMarkdown(bm.creator.replace(/ /g, "_"))}](https://osu.ppy.sh/users/${bm.creator})`)
                         .setColor([187, 17, 119])
                         .addField('Song Details', stripIndent`
                         \u2022 Source: ${bm.source}
