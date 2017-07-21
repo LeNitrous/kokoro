@@ -110,7 +110,7 @@ Bot.on('messageReactionAdd', (react, user) => {
 	if (!react.message.guild.members.find('id', user.id).hasPermission('MANAGE_MESSAGES')) return;
 	if (react.emoji.name != '\u2B50') return;
 	const pin = new Discord.RichEmbed()
-		.setAuthor(react.message.user.tag, react.message.user.displayAvatarURL)
+		.setAuthor(react.message.member.user.tag, react.message.member.user.displayAvatarURL)
 		.setTimestamp(new Date())
 		.setDescription(react.message.content)
 		.setColor([255, 221, 8])
