@@ -110,11 +110,11 @@ Bot.on('messageReactionAdd', (react, user) => {
 	if (!react.message.guild.members.find('id', user.id).hasPermission('MANAGE_MESSAGES')) return;
 	if (react.emoji.name != '\u2B50') return;
 	const pin = new Discord.RichEmbed()
-		.setAuthor(user.tag, user.displayAvatarURL)
+		.setAuthor(react.message.user.tag, react.message.user.displayAvatarURL)
 		.setTimestamp(new Date())
 		.setDescription(react.message.content)
 		.setColor([255, 221, 8])
-		.setFooter('\u2B50');
+		.setFooter(`\u2B50 by ${user.username}`);
 	var a = react.message.attachments.first();
 	if (a && a.height && a.width) {pin.setImage(a.url)};
 	if (a && a.height == undefined && a.width == undefined) {pin.addField('File', `[${a.filename}](${a.url})`)};
