@@ -67,7 +67,7 @@ module.exports = {
         if (args[0].match(/<:[\w]+:[\d]+>/g)) {
             msg.channel.startTyping();
             var emoji_id = args[0].match(/[0-9]/g).join("");
-            var emoji = msg.guild.emojis.find('id', emoji_id);
+            var emoji = client.emojis.find('id', emoji_id);
             var enlarged = new Image;
             reqBuff.get(emoji.url, (err, res, body) => {
                 enlarged.onload = () => { };
