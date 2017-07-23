@@ -109,6 +109,7 @@ Bot.on('messageReactionAdd', (react, user) => {
 	if (!guildStarredMessageChannel) return;
 	if (!react.message.guild.members.find('id', user.id).hasPermission('MANAGE_MESSAGES')) return;
 	if (react.emoji.name != '\u2B50') return;
+	if (react.count != 1) return;
 	const pin = new Discord.RichEmbed()
 		.setAuthor(react.message.member.user.tag, react.message.member.user.displayAvatarURL)
 		.setTimestamp(new Date())
