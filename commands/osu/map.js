@@ -107,7 +107,7 @@ module.exports = {
                         .setTitle(`${Status[bm.approvalStatus]} ${truncate.apply(Discord.Util.escapeMarkdown(title), [60, true])}`)
                         .setURL(`https://osu.ppy.sh/s/${bm.beatmapSetId}`)
                         .setThumbnail(`https://b.ppy.sh/thumb/${bm.beatmapSetId}l.jpg`)
-                        .setDescription(`${Discord.Util.escapeMarkdown(bm.version)} by [${Discord.Util.escapeMarkdown(bm.creator.replace(/ /g, "_"))}](https://osu.ppy.sh/users/${bm.creator})`)
+                        .setDescription(`${Discord.Util.escapeMarkdown(bm.version)} by [${Discord.Util.escapeMarkdown(bm.creator)}](https://osu.ppy.sh/users/${bm.creator.replace(/ /g, "_")})`)
                         .setColor([187, 17, 119])
                         .addField('Song Details', stripIndent`
                         \u2022 Source: ${bm.source}
