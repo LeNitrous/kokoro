@@ -17,7 +17,8 @@
     "sqlite": "^2.8.0",
     "striptags": "^3.0.1",
     "superagent": "^3.5.2",
-    "then-request": "^2.2.0"
+    "then-request": "^2.2.0",
+    "seedrandom": "^2.3.10"
   },
   "devDependencies": {},
   "scripts": {
