@@ -2,7 +2,7 @@ const setting = require('../../data/guildSettings.json'),
       util = require('../../utils/utils.js');
 
 module.exports = {
-    help: "Log guild events.",
+    help: "Allow Star Reaction to pin messages to a specific channel.",
     usage: '<channel>',
     run: (client, msg, args) => {
         if (!msg.member.hasPermission("MANAGE_SERVER")) { return msg.channel.send(config.replySet.noPermsUser) };

@@ -31,7 +31,7 @@ function formatNumber(x) {
 
 module.exports = {
     help: 'Gets an osu! user profile',
-    usage: '<user> <osu/taiko/catch/mania>',
+    usage: '<mention/user> <mode>',
     run: (client, msg, args) => {
         /*
         var input = args.join(" ").split(",");
@@ -42,9 +42,19 @@ module.exports = {
         */
         var u = args.join(" ");
         var m = 0;
+        var f;
         if (u === undefined) { u = msg.author }
         else if (u.match(/<@[\d]+>/g) || u.match(/<@![\d]+>/g)) { u = msg.mentions.users.first() };
-        if (typeof u == 'object') { u = list[msg.guild.id][u.id].osu };
+        if (typeof u == 'object') { 
+            f = msg.mentions.users.first()
+            if (list[msg.guild.id] && list[msg.guild.id][u.id] && list[msg.guild.id][u.id].osu) {
+                u = list[msg.guild.id][u.id].osu;
+            }
+            else {
+                u = undefined;
+            }
+        };
+        if (u == undefined) { return msg.channel.send(`\u26A0 \u276f  ${f.username} doesn't have a linked osu! account yet.`) };
         osu.getUser({u: u, m: m})
             .then(user => {
                 const embed = new Discord.RichEmbed()

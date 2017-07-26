@@ -48,6 +48,7 @@ module.exports = {
         if (args[0].includes('https://osu.ppy.sh/s/')) {
             var s = args[0].includes('https://osu.ppy.sh/s/') ? args[0].replace('https://osu.ppy.sh/s/', '') : args[0];
             s = s.substring(0, s.indexOf('&') != -1 ? s.indexOf('&') : s.length);
+            msg.channel.startTyping();
             osu.getBeatmapSet({s: s})
                 .then(bms => {
                     // Build Version List Here
@@ -133,5 +134,6 @@ module.exports = {
         else {
             msg.channel.send('\u26A0 \u276f  Invalid Argument.');
         };
+        msg.channel.stopTyping();
     }
 }

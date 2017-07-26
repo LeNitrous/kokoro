@@ -6,9 +6,19 @@ module.exports = {
     usage: '<mention/id>',
     run: (client, msg, args) => {
         var u = args[0];
+        var f;
         if (u === undefined) { u = msg.author }
         else if (u.match(/<@[\d]+>/g) || u.match(/<@![\d]+>/g)) { u = msg.mentions.users.first() };
-        if (typeof u == 'object') { u = list[msg.guild.id][u.id].deresute };
+        if (typeof u == 'object') { 
+            f = msg.mentions.users.first()
+            if (list[msg.guild.id] && list[msg.guild.id][u.id] && list[msg.guild.id][u.id].deresute) {
+                u = list[msg.guild.id][u.id].deresute;
+            }
+            else {
+                u = undefined;
+            }
+        };
+        if (u == undefined) { return msg.channel.send(`\u26A0 \u276f  ${f.username} doesn't have a linked Deresute account yet.`) };
         msg.channel.startTyping();
         request.get(`https://deresute.me/${u}/large`)
             .end((error, item) => {
