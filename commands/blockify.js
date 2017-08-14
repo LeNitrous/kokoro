@@ -69,7 +69,7 @@ module.exports = {
             var emoji_id = args[0].match(/[0-9]/g).join("");
             var emoji = client.emojis.find('id', emoji_id);
             var enlarged = new Image;
-            if (emoji.url == null) { return msg.channel.send('\u26A0 \u276f I can\'t find that emoji.') };
+            if (emoji == null) { return msg.channel.send('\u26A0 \u276f I don\'t have that emoji.') };
             reqBuff.get(emoji.url, (err, res, body) => {
                 enlarged.onload = () => { };
                 enlarged.src = body;

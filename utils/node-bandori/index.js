@@ -1,4 +1,5 @@
 const request = require('superagent'),
+      scraper = require("scraperjs").StaticScraper,
       Constants = require('./Constants.js');
 
 const apiCall = (endpoint, options) => {
@@ -109,5 +110,46 @@ exports.getMember = (name) => {
         .catch(err => {
             console.log(err.stack);
         });
+    })
+}
+
+exports.getCurrentEvent = () => {
+    return new Promise((resolve, reject) => {
+        scraper.create('http://bandori.party/events/')
+            .scrape(function($) {
+                return $('.col-md-6 a').map(function() {
+                    return $(this).attr('href');
+                }).get()[0];
+            })
+            .then(function(url) {
+                scraper.create('http://bandori.party' + url)
+                    .scrape(function($) {
+                        return {
+                            image: 'http:' + $('.padding50.text-center.top-item img').attr('src'),
+                            en_name: $('.table.about-table tr').map(function() {
+                                return $(this);
+                            }).get()[1].text().trim().replace(/[\n]|[\t]/g, '').split('      ')[1],
+                            jp_name: $('.table.about-table tr').map(function() {
+                                return $(this);
+                            }).get()[2].text().trim().replace(/[\n]|[\t]/g, '').split('      ')[1],
+                            jp_start: $('.datetime').map(function() {
+                                return $(this);
+                            }).get()[0].text().split(/ \d\d:/)[0],
+                            jp_end: $('.datetime').map(function() {
+                                return $(this);
+                            }).get()[2].text().split(/ \d\d:/)[0],
+                            website_url: 'http://bandori.party' + url
+                        }
+                    })
+                    .then(function(data) {
+                        resolve(data);
+                    })
+                    .catch(err => {
+                        reject(err.stack);
+                    });
+            })
+            .catch(err => {
+                reject(err.stack);
+            });
     })
 }
