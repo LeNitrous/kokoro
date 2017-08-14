@@ -1,5 +1,5 @@
 const list = require('../data/blacklist.json'),
-      util = require('../../utils/utils.js');
+      util = require('../utils/utils.js');
 
 module.exports = {
     help: "Toggle user blacklist from sending reports",
