@@ -95,7 +95,7 @@ module.exports = {
                                         var c_List = [];
                                         fs.readFile('./data/sif/scout-10.png', (err, bg) => {
                                             c_bg.onload = () => {
-                                                console.log('loaded');
+                                                console.log('Finished Request... Now Loading Preview.');
                                             };
                                             c_bg.src = bg;
                                             ctx.drawImage(c_bg, 960/2 - 360/2, 10);

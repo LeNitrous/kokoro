@@ -74,12 +74,6 @@ exports.getCard = (id) => {
 }
 
 exports.getMembers = (page) => {
-    /*
-    var searchTerm = term.split(',')[0];
-    var filter = term.replace(/\s/g,'').split(',');
-    options.search = searchTerm;
-    if (Boolean(findFilter('p=', filter))) {options.page = findFilter('p=', filter).replace('p=', '')};
-    */
     var options = {};
     options.page = !isNaN(parseInt(page)) ? page : 1;
     let items = [];
@@ -114,6 +108,23 @@ exports.getMember = (name) => {
 }
 
 exports.getCurrentEvent = () => {
+    function GetRemainingTime(date) {
+        var time = new Date(date - new Date()).getTime();
+        if (time < 0) {
+            return false;
+        }
+        var d = Math.floor(time / (1000 * 60 * 60 * 24));
+        var h = Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var m = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
+        var s = Math.floor((time % (1000 * 60)) / 1000);
+
+        var d_tag = d = 1 ? 'day' : 'days';
+        var h_tag = h = 1 ? 'hour' : 'hours';
+        var m_tag = m = 1 ? 'minute' : 'minutes';
+        var s_tag = s = 1 ? 'second' : 'seconds';
+        
+        return `${d} ${d_tag}, ${h} ${h_tag}, ${m} ${m_tag}, ${s} ${s_tag} left`;
+    }
     return new Promise((resolve, reject) => {
         scraper.create('http://bandori.party/events/')
             .scrape(function($) {
@@ -124,6 +135,10 @@ exports.getCurrentEvent = () => {
             .then(function(url) {
                 scraper.create('http://bandori.party' + url)
                     .scrape(function($) {
+                        var eDate = $('.datetime').map(function() {
+                                        return $(this);
+                                    }).get()[2].text().split(/ \d\d:/)[0];
+                        eDate = new Date(`${eDate} 20:00:00`);
                         return {
                             image: 'http:' + $('.padding50.text-center.top-item img').attr('src'),
                             en_name: $('.table.about-table tr').map(function() {
@@ -133,11 +148,12 @@ exports.getCurrentEvent = () => {
                                 return $(this);
                             }).get()[2].text().trim().replace(/[\n]|[\t]/g, '').split('      ')[1],
                             jp_start: $('.datetime').map(function() {
-                                return $(this);
-                            }).get()[0].text().split(/ \d\d:/)[0],
+                                        return $(this);
+                                    }).get()[0].text().split(/ \d\d:/)[0] + ' 3:00 PM (JST)',
                             jp_end: $('.datetime').map(function() {
-                                return $(this);
-                            }).get()[2].text().split(/ \d\d:/)[0],
+                                        return $(this);
+                                    }).get()[2].text().split(/ \d\d:/)[0] + ' 9:00 PM (JST)',
+                            jp_timeleft: GetRemainingTime(eDate),
                             website_url: 'http://bandori.party' + url
                         }
                     })

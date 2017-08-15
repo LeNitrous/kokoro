@@ -15,8 +15,11 @@ module.exports = {
             .addField('End Date', event.jp_end, true)
             .setImage(event.image)
             .setColor([228, 0, 70]);
+            if (event.jp_timeleft) {
+                info.addField(`Time Remaining`, event.jp_timeleft)
+            };
             msg.channel.send({embed: info});
-        })
+        });
         msg.channel.stopTyping();
     }
 }
