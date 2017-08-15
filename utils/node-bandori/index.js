@@ -118,10 +118,10 @@ exports.getCurrentEvent = () => {
         var m = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
         var s = Math.floor((time % (1000 * 60)) / 1000);
 
-        var d_tag = d = 1 ? 'day' : 'days';
-        var h_tag = h = 1 ? 'hour' : 'hours';
-        var m_tag = m = 1 ? 'minute' : 'minutes';
-        var s_tag = s = 1 ? 'second' : 'seconds';
+        var d_tag = d == 1 ? 'day' : 'days';
+        var h_tag = h == 1 ? 'hour' : 'hours';
+        var m_tag = m == 1 ? 'minute' : 'minutes';
+        var s_tag = s == 1 ? 'second' : 'seconds';
         
         return `${d} ${d_tag}, ${h} ${h_tag}, ${m} ${m_tag}, ${s} ${s_tag} left`;
     }
