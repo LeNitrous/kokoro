@@ -40,8 +40,8 @@ module.exports = {
         if ((u.match(/<@[\d]+>/g) || u.match(/<@![\d]+>/g)) && u != '') { u = msg.mentions.users.first() };
         console.log(`user: ${u}, mode: ${m}`)
         */
+        if (args.slice(-1)[0] in ModesArg){ var m = ModesArg[args.pop()] } else { var m = 0 };
         var u = args.join(" ");
-        var m = 0;
         var f;
         if (u === undefined) { u = msg.author }
         else if (u.match(/<@[\d]+>/g) || u.match(/<@![\d]+>/g)) { u = msg.mentions.users.first() };
