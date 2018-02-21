@@ -1,0 +1,8 @@
+# Visual Studio Code
+.vscode/
+
+# NodeJS
+node_modules/
+
+# Private
+config.json

@@ -1,9 +1,11 @@
-const Bot = require("./src/Bot.js");
+const Bot = require("./mods/tasker");
+const conf = require("./config.json");
+
 const Kokoro = new Bot({
     tasks: "tasks/**",
-    token: "MzMxNTUyMDA0NTQ1NTc2OTYx.DWlrrA.agGdEljVlJn18dJdZF8USlJ0wtM",
+    token: conf.token,
     prefix: "~!",
-    ownerID: ["170905486407761931"],
+    ownerID: conf.owners,
     logError: true
 });
 
