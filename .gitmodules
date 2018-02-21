@@ -1,0 +1,6 @@
+[submodule "mods/tasker"]
+	path = mods/tasker
+	url = https://github.com/LeNitrous/tasker
+[submodule "mods/node-dori"]
+	path = mods/node-dori
+	url = https://github.com/LeNitrous/node-dori
