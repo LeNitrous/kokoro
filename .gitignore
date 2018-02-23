@@ -6,3 +6,4 @@ node_modules/
 
 # Private
 config.json
+error.log
