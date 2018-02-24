@@ -5,8 +5,9 @@ module.exports = {
     args: [
         {name: "option", desc: 'Valid options are: "birthdayChannel", "eventChannel", "eventMessage"'},
         {name: "value", desc: "Dependent on option selected. Leave empty to delete option."}
-
     ],
+    preq: ["HasElevatedPerms"],
+    perm: ["MANAGE_CHANNELS"],
     task: (Kokoro, msg, args) => {
         var validOptions = ["birthdaychannel", "eventchannel", "eventmessage"];
         var option = args.shift().toLowerCase();
