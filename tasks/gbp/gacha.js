@@ -13,9 +13,9 @@ module.exports = {
         var stars = args.shift();
         var get = 0;
         var table = [
-            {item: 4, weight: 1},
+            {item: 4, weight: 2},
             {item: 3, weight: 9},
-            {item: 2, weight: 80}
+            {item: 2, weight: 89}
         ];
         var lootTable = generateLootTable(table);
         if (stars > 2500)
@@ -69,7 +69,7 @@ function generateLootTable(table) {
     var NEW_TABLE = [];
     table.forEach(item => {
         for (var i = 0; i < item.weight; i++) {
-            NEW_TABLE.push(item.item)
+            NEW_TABLE.push(item.item);
         }
     });
     function shuffle(array) {
