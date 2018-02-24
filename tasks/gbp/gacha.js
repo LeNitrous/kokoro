@@ -19,9 +19,9 @@ module.exports = {
         ];
         var lootTable = generateLootTable(table);
         if (stars > 2500)
-            return Kokoro.send(msg.channel, "", "You can't spend more than <:star:406381350648807425> **2500x**");
+            return Kokoro.send(msg.channel, "❎", "You can't spend more than <:star:406381350648807425> **2500x**");
         if (stars < 250 || isNaN(stars))
-            return Kokoro.send(msg.channel, "", "You need to spend at least <:star:406381350648807425> **250x**");
+            return Kokoro.send(msg.channel, "❎", "You need to spend at least <:star:406381350648807425> **250x**");
         if (stars == 2500)
             guaranteed = true;
         get = Math.floor(stars / 250);
@@ -56,7 +56,13 @@ module.exports = {
                 obtainedCards.forEach(card => {
                     obtainedCardList.push(`#${card.id.toString().padStart(3, "0")} > ${card.toString()}`);
                 });
-                msg.channel.send(`${msg.author.toString()}, you spent <:star:406381350648807425> **${stars}x** for your gacha and got:`);
+                if (guaranteed)
+                    get += 1;
+                var change = stars - (get * 250);
+                if (change > 0)
+                    msg.channel.send(`${msg.author.toString()}, you spent <:star:406381350648807425> **${get * 250}x** with a change of <:star:406381350648807425> **${change}x** for your gacha and got:`);
+                else
+                    msg.channel.send(`${msg.author.toString()}, you spent <:star:406381350648807425> **${get * 250}x** for your gacha and got:`);
                 msg.channel.send(obtainedCardList.join('\n'), {code: "md"});
             })
             .catch(error => {

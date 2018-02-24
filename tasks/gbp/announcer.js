@@ -25,7 +25,6 @@ module.exports = {
                     if (!chanId)
                         return Kokoro.send(msg.channel, "❎", "Invalid channel.");
                     channel = msg.guild.channels.find('id', chanId);
-                    console.log(option, value, chanId, guildId, channel.type);
                     if (channel.type == 'voice')
                         return Kokoro.send(msg.channel, "❎", "Cannot use a voice channel.");
                     Kokoro.setGuildOption(guildId, "bandori_birthdayChannel", chanId);

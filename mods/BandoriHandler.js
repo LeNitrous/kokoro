@@ -95,20 +95,21 @@ function embedEvent(event, eventLocale, cardArray, musicArray) {
 function embedMusic(musicArray) {
     var music = (musicArray.length > 0) ? musicArray.shift() : musicArray;
     var color = (bands.hasOwnProperty(music.band)) ? bands[music.band] : [233, 30, 99];
+    var difficultyArray = [];
+    difficultyArray.push(`★${music.difficulty.easy.level.toString().padStart(2, "0")} EASY`);
+    difficultyArray.push(`★${music.difficulty.normal.level.toString().padStart(2, "0")} NORMAL`);
+    difficultyArray.push(`★${music.difficulty.hard.level.toString().padStart(2, "0")} HARD`);
+    difficultyArray.push(`★${music.difficulty.expert.level.toString().padStart(2, "0")} EXPERT`);
     const embed = new Discord.RichEmbed()
         .setAuthor(music.toString())
         .setThumbnail(music.jacket)
         .setColor(color)
         .setDescription(
-        `\n• Arranger: ${music.arranger}` +
-        `\n• Composer: ${music.composer}` +
-        `\n• Lyricist: ${music.lyricist}`)
-        .addField("Difficulties",
-        `★${music.difficulty.easy.level} EASY` +
-        `\n★${music.difficulty.normal.level} NORMAL` +
-        `\n★${music.difficulty.hard.level} HARD` +
-        `\n★${music.difficulty.expert.level} EXPERT` +
-        `\n\n[Listen](${music.bgm}) (${music.type})`);
+        `\n• **Arranger:** ${music.arranger}` +
+        `\n• **Composer:** ${music.composer}` +
+        `\n• **Lyricist:** ${music.lyricist}`)
+        .addField("Difficulties",`\`\`\`md\n${difficultyArray.join('\n')}\`\`\`` +
+        `\n[Listen](${music.bgm}) (${capitalize(music.type)})`);
     if (musicArray.length > 0) {
         var musicList = [];
         musicArray.forEach(item => {

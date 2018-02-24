@@ -5,7 +5,7 @@ const fs = require("fs");
 const Kokoro = new Bot({
     tasks: "tasks/**",
     token: conf.token,
-    prefix: "~!",
+    prefix: conf.prefix,
     ownerID: conf.owners,
     logError: true
 });
