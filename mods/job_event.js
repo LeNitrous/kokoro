@@ -13,6 +13,8 @@ module.exports = {
                     event.getLocale()
                 ])
                 .then(response => {
+                    if (!data.bandori)
+                        Kokoro.setGuildOption("bandori", "event", event.id);
                     if (!data.bandori.event)
                         Kokoro.setGuildOption("bandori", "event", event.id);
                     if (data.bandori.event == event.id) return;
