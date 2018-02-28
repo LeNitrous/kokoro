@@ -9,8 +9,8 @@ module.exports = {
     task: (Kokoro, msg, args) => {
         var url = args[0];
         if (!url.startsWith('https://' || !url.startsWith('http://')) && !checkURL(url))
-            return Kokoro.Bot.send(msg.channel, "❎", "Argument must be a valid URL");
+            return Kokoro.send(msg.channel, "❎", "Argument must be a valid URL");
         Kokoro.user.setAvatar(url);
-        Kokoro.Bot.send(msg.channel, "✅", "Avatar successfully changed");
+        Kokoro.send(msg.channel, "✅", "Avatar successfully changed");
     }
 };

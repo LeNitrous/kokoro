@@ -83,7 +83,7 @@ function embedEvent(event, eventLocale, cardArray, musicArray) {
         .setImage(event.image);
     if (musicArray.length > 0) {
         musicArray.forEach(item => {
-            stringMusic.push(`#${item.id.toString().padStart(3, "0")} > ` + item.toString());
+            musicList.push(`#${item.id.toString().padStart(3, "0")} > ` + item.toString());
         });
         embed.addField('Event Music', `\`\`\`md\n${musicList.join('\n')}\`\`\``);
     }
