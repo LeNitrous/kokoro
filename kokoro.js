@@ -47,6 +47,7 @@ Kokoro.on("ready", () => {
     )
 });
 
+Kokoro.loadEvent(require("./mods/event_peekAtPing.js"));
 Kokoro.loadJob(require("./mods/job_event.js"));
 Kokoro.loadJob(require("./mods/job_birthday.js"));
 Kokoro.start();
