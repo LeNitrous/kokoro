@@ -1,5 +1,0 @@
-{
-    "name": "Server Moderation",
-    "desc": "Moderation Commands",
-    "preq": ["ServerOnly"]
-}
