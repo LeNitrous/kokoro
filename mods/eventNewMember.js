@@ -16,7 +16,7 @@ module.exports = {
                 if (member) {
                     member.send("Your probation has ended and you can now talk. Don't forget to say hi to us!");
                     member.removeRole(member.guild.roles.find("name", "Limited"), "Probation expired.");
-                    member.addRole(member.guild.roles.find("name", "Member"), "Probation expired.");
+                    member.addRole(member.guild.roles.find("name", "Members"), "Probation expired.");
                 }
             }, 300000);
         }
