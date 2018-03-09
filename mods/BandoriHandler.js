@@ -154,6 +154,7 @@ module.exports.embedEvent = embedEvent;
 module.exports.embedMusic = embedMusic;
 module.exports.embedKoma = embedKoma;
 module.exports.sendSearch = sendSearch;
+module.exports.emojis = emojis;
 
 function capitalize(str) {
     return str.replace(/\w\S*/g, txt => {
