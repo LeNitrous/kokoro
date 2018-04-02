@@ -47,7 +47,12 @@ Kokoro.on("ready", () => {
     )
 });
 
-Kokoro.loadEvent(require("./mods/eventNewMember.js"));
-Kokoro.loadJob(require("./mods/jobBandoriEvent.js"));
-Kokoro.loadJob(require("./mods/jobBandoriBirthday.js"));
+fs.readdirSync("./mods/events/").forEach(file => {
+    Kokoro.loadEvent(require("./mods/events/" + file));
+});
+
+fs.readdirSync("./mods/jobs/").forEach(file => {
+    Kokoro.loadJob(require("./mods/jobs/" + file));
+});
+
 Kokoro.start();

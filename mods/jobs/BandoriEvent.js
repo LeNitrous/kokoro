@@ -1,5 +1,5 @@
 module.exports = {
-    name: "Bandori Event",
+    name: "bandoriNewEvent",
     time: "00 00 15 * * *",
     timezone: "Asia/Tokyo",
     task: (Kokoro) => {
