@@ -5,7 +5,7 @@ module.exports = {
         if (member.guild.id == "261878898290196491") {
             // Guild Logs
             member.guild.channels.get("430280449668153365")
-                .send(`\`[${new Date().toLocaleTimeString()}]\` **[MEMBER LEFT]** ❎ __${member.user.discriminator}__ left the server.`);
+                .send(`\`[${new Date().toLocaleTimeString()}]\` **[MEMBER LEFT]** ❎ __${member.user.tag}__ left the server.`);
         }
     }
 }

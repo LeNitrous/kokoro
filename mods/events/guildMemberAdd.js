@@ -22,7 +22,7 @@ module.exports = {
             }, 300000);
             // Guild Logs
             member.guild.channels.get("430280449668153365")
-                .send(`\`[${new Date().toLocaleTimeString()}]\` **[MEMBER JOINED]** 🆕 __${member.user.discriminator}__ joined the server.`);
+                .send(`\`[${new Date().toLocaleTimeString()}]\` **[MEMBER JOINED]** 🆕 __${member.user.tag}__ joined the server.`);
         }
     }
 }

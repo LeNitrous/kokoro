@@ -6,7 +6,7 @@ module.exports = {
             // Guild Logs
             if (oldMember.nickname !== newMember.nickname) {
                 member.guild.channels.get("430280449668153365")
-                    .send(`\`[${new Date().toLocaleTimeString()}]\` **[MEMBER UPDATE]** 🔁 __${oldMember.user.discriminator}__ updated their nickname.\n▪ \`${oldMember.nickname}\` => \`${newMember.nickname}\``);
+                    .send(`\`[${new Date().toLocaleTimeString()}]\` **[MEMBER UPDATE]** 🔁 __${oldMember.user.tag}__ updated their nickname.\n▪ \`${oldMember.nickname}\` => \`${newMember.nickname}\``);
             }
             else if (!oldMember.roles.equals(newMember.roles)) {
                 var oldMemberRoles = Array.from(oldMember.roles.values());
@@ -15,7 +15,7 @@ module.exports = {
                     return newMemberRoles.indexOf(n) !== -1;
                 });
                 member.guild.channels.get("430280449668153365")
-                    .send(`\`[${new Date().toLocaleTimeString()}]\` **[MEMBER UPDATE]** 🔁 __${oldMember.user.discriminator}__ updated their roles.\n▪ ${newRoles.join(", ")}`);
+                    .send(`\`[${new Date().toLocaleTimeString()}]\` **[MEMBER UPDATE]** 🔁 __${oldMember.user.tag}__ updated their roles.\n▪ ${newRoles.join(", ")}`);
             }
         }
     }
