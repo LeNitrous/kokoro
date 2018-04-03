@@ -6,7 +6,7 @@ module.exports = {
             // Guild Logs
             if (!message.author.bot) {
                 message.guild.channels.get("430280449668153365")
-                .send(`\`[${new Date().toLocaleTimeString()}]\` **[MESSAGE REMOVED]** ${message.channel.toString()} ⏹ __${message.member.user.tag}__ deleted a message.\n▪ **Message:** ${message.content}`);
+                .send(`\`[${new Date().toLocaleTimeString()}]\` **[MESSAGE REMOVED]** ${message.channel.toString()} ⏹ __${message.member.user.tag}__ deleted a message.\n▪ **__Message:__**\n${message.content}`);
             }
         }
     }
