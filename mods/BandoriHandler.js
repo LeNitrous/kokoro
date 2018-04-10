@@ -1,9 +1,7 @@
 const BandoriApi = require("./node-dori");
 const Discord = require("discord.js");
 
-const Bandori = new BandoriApi({
-    region: "jp"
-});
+const Bandori = new BandoriApi({region: "jp"});
 
 function embedCard(cardArray, cardLocale, cardSkill) {
     var card = (cardArray.length >= 1) ? cardArray.shift() : cardArray;

@@ -7,52 +7,89 @@ const Kokoro = new Bot({
     token: conf.token,
     prefix: conf.prefix,
     ownerID: conf.owners,
-    logError: true
 });
-
-Kokoro.setGuildOption = (guildId, key, value) => {
-    if (!fs.existsSync("./data.json")) {
-        fs.writeFileSync("./data.json", JSON.stringify({}));
-    }
-    guildId += "";
-    var data = require("./data.json");
-    if (!data[guildId]) {
-        data[guildId] = {};
-    }
-    if (value) {
-        data[guildId][key] = value;
-    }
-    else {
-        data[guildId][key] = undefined;
-    };
-    fs.writeFile("./data.json", JSON.stringify(data),
-        (err) => {
-            if (err) Kokoro.throwError("An error occured saving data", err);
-        });
-}
-
-Kokoro.getGuildOption = (guildId, key) => {
-    if (!fs.existsSync("./data.json")) return;
-    var data = require("./data.json");
-    guildId += "";
-    if (!data[guildId]) return;
-    if (!data[guildId][key]) return;
-    return data[guildId][key];
-}
 
 Kokoro.on("ready", () => {
     Kokoro.user.setActivity(
         `${Kokoro.prefix}help`,
         {type: "LISTENING"}
-    )
+    );
+    if (!Kokoro.settings.get("guild")) {
+        Kokoro.settings.set("guild", {});
+    }
+    if (!Kokoro.settings.get("user")) {
+        Kokoro.settings.set("user", {});
+    }
+    if (!Kokoro.settings.get("client")) {
+        Kokoro.settings.set("client", settings.client);
+    }
+    Array.from(Kokoro.guilds.keys()).forEach(id => {
+        if (!Kokoro.settings.get("guild")[id]) {
+            Kokoro.settings.get("guild")[id] = settings.guild;
+        }
+    });
+    Array.from(Kokoro.users.keys()).forEach(id => {
+        if (!Kokoro.settings.get("user")[id]) {
+            Kokoro.settings.get("user")[id] = settings.user;
+        }
+    });
 });
 
-fs.readdirSync("./mods/events/").forEach(file => {
-    Kokoro.loadEvent(require("./mods/events/" + file));
+Kokoro.on("guildCreate", guild => {
+    Kokoro.settings.get("guild")[guild.id] = settings.guild;
 });
 
-fs.readdirSync("./mods/jobs/").forEach(file => {
-    Kokoro.loadJob(require("./mods/jobs/" + file));
+fs.readdirSync("./events/").forEach(file => {
+    Kokoro.loadEvent(require("./events/" + file));
+});
+
+fs.readdirSync("./jobs/").forEach(file => {
+    var job = require("./jobs/" + file);
+    job.name = file.split(".").shift();
+    Kokoro.loadJob(job);
 });
 
 Kokoro.start();
+
+var settings = {
+    client: {
+        eventEN_id: 0,
+        eventJP_id: 0,
+        eventTW_id: 0,
+        eventKR_id: 0,
+        version_jp: 0,
+        version_en: 0,
+        version_tw: 0,
+        version_kr: 0
+    },
+    guild: {
+        logger: null,
+        bandori: {
+            birthday: null,
+            eventEN: null,
+            eventJP: null,
+            eventTW: null,
+            eventKR: null,
+            eventMsgEN: "[BanG Dream! JP] **New Event!**",
+            eventMsgJP: "[BanG Dream! JP] **New Event!**",
+            eventMsgTW: "[BanG Dream! TW] **New Event!**",
+            eventMsgKR: "[BanG Dream! KR] **New Event!**",
+            birthdayMsg: "[BanG Dream!] **Happy Birthday!**"
+        }
+    },
+    user: {
+        subscriptions: {
+            eventEN: false,
+            eventJP: false,
+            eventTW: false,
+            eventKR: false,
+            birthday: false
+        },
+        accounts: {
+            bandori_EN: null,
+            bandori_JP: null,
+            bandori_TW: null,
+            bandori_KR: null
+        }
+    }
+}
