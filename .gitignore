@@ -5,8 +5,5 @@
 node_modules/
 
 # Private
-tasks/gbp/talk.js
+data/
 config.json
-data.json
-error.log
-*.exe
