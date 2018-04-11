@@ -4,7 +4,7 @@ const Api = new Bandori({region: "jp"});
 const region = "jp";
 
 module.exports = {
-    time: "00 * * * * *",
+    time: "00 00 15 * * *",
     timezone: "Asia/Tokyo",
     task: (Kokoro) => {
         console.log("[Event JP] Checking for new events...");
