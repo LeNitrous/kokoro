@@ -8,6 +8,10 @@ module.exports = {
     task: (Kokoro, msg, args) => {
         if (!args[0]) args[0] = "jp";
         var region = args[0].toLowerCase();
+        var allowedRegions = ["en", "tw", "kr", "jp"];
+        if (!allowedRegions.includes(region)) {
+            return msg.channel.send("Invalid region. Please use `en`, `jp`, `kr`, `tw`.");
+        }
         var Bandori = new Api({ region: region });
 
         var cache = Kokoro.settings.get("cache");
