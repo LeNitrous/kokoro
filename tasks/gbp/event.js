@@ -7,21 +7,41 @@ module.exports = {
     help: 'Get current Girls Band Party event.',
     task: (Kokoro, msg, args) => {
         if (!args[0]) args[0] = "jp";
-        var Bandori = new Api({ region: args[0].toLowerCase() });
-        Bandori.getCurrentEvent()
-            .then(event => 
-                Promise.all([
-                    event.getCards(),
-                    event.getMusic()
-                ])
-                .then(response => {
-                    var embed = embedEvent(event, response[0], response[1]);
-                    msg.channel.send(embed);
-                })
-            )
-            .catch(error => {
-                throw new Error(error);
-            });
+        var region = args[0].toLowerCase();
+        var Bandori = new Api({ region: region });
+
+        var cache = Kokoro.settings.get("cache");
+        if (cache.events[region] === null) {
+            cache.events[region] = { event: { end: 0 } };
+        }
+        if (cache.events[region].event.end <= new Date().getTime() || args[1] == "--force") {
+            console.log("Found new event data. Now Loading...");
+            msg.channel.startTyping();
+            Bandori.getCurrentEvent()
+                .then(event => 
+                    Promise.all([
+                        event.getCards(),
+                        event.getMusic()
+                    ])
+                    .then(response => {
+                        var data = {
+                            event: event,
+                            cards: response[0],
+                            music: response[1]
+                        };
+                        cache.events[region] = data;
+                        Kokoro.settings.set("cache", cache);
+                        var embed = embedEvent(data.event, data.cards, data.music);
+                        msg.channel.send(embed);
+                        msg.channel.stopTyping();
+                    })
+                )
+        }
+        else {
+            var embed = embedEvent(cache.events[region].event, 
+                cache.events[region].cards, cache.events[region].music);
+            msg.channel.send(embed);
+        }
     }
 };
 

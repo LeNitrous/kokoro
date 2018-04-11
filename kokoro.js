@@ -20,12 +20,14 @@ Kokoro.on("ready", () => {
     if (!Kokoro.settings.get("user")) {
         Kokoro.settings.set("user", {});
     }
-    if (!Kokoro.settings.get("client")) {
-        Kokoro.settings.set("client", settings.client);
+    if (!Kokoro.settings.get("cache")) {
+        Kokoro.settings.set("cache", settings.cache);
     }
     Array.from(Kokoro.guilds.keys()).forEach(id => {
         if (!Kokoro.settings.get("guild")[id]) {
-            Kokoro.settings.get("guild")[id] = settings.guild;
+            var guild = Kokoro.settings.get("guild");
+            guild[id] = settings.guild;
+            Kokoro.settings.set("guild", guild);
         }
     });
     Array.from(Kokoro.users.keys()).forEach(id => {
@@ -52,30 +54,25 @@ fs.readdirSync("./jobs/").forEach(file => {
 Kokoro.start();
 
 var settings = {
-    client: {
-        eventEN_id: 0,
-        eventJP_id: 0,
-        eventTW_id: 0,
-        eventKR_id: 0,
-        version_jp: 0,
-        version_en: 0,
-        version_tw: 0,
-        version_kr: 0
+    cache: {
+        events: {
+            en: null,
+            jp: null,
+            tw: null,
+            kr: null
+        }
     },
     guild: {
-        logger: null,
-        bandori: {
-            birthday: null,
-            eventEN: null,
-            eventJP: null,
-            eventTW: null,
-            eventKR: null,
-            eventMsgEN: "[BanG Dream! JP] **New Event!**",
-            eventMsgJP: "[BanG Dream! JP] **New Event!**",
-            eventMsgTW: "[BanG Dream! TW] **New Event!**",
-            eventMsgKR: "[BanG Dream! KR] **New Event!**",
-            birthdayMsg: "[BanG Dream!] **Happy Birthday!**"
-        }
+        birthday: null,
+        eventChannelEN: null,
+        eventChannelJP: null,
+        eventChannelTW: null,
+        eventChannelKR: null,
+        eventMsgEN: "[BanG Dream! JP] **New Event!**",
+        eventMsgJP: "[BanG Dream! JP] **New Event!**",
+        eventMsgTW: "[BanG Dream! TW] **New Event!**",
+        eventMsgKR: "[BanG Dream! KR] **New Event!**",
+        birthdayMsg: "[BanG Dream!] **Happy Birthday!**"
     },
     user: {
         subscriptions: {
