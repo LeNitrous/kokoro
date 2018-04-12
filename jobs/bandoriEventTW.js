@@ -1,26 +1,26 @@
 const Bandori = require("../mods/node-dori");
-const Api = new Bandori({region: "jp"});
+const Api = new Bandori({region: "tw"});
 
 module.exports = {
     time: "00 00 15 * * *",
-    timezone: "Asia/Tokyo",
+    timezone: "Asia/Taipei",
     task: (Kokoro) => {
-        console.log("[Event JP] Checking for new events...");
+        console.log("[Event TW] Checking for new events...");
         Api.getCurrentEvent()
             .then(event => {
                 var guild = Kokoro.settings.get("guild");
                 var cache = Kokoro.settings.get("cache");
-                if (cache.events.jp === null) {
-                    cache.events.jp = { event: { id: 0 } };
+                if (cache.events.tw === null) {
+                    cache.events.tw = { event: { id: 0 } };
                 }
-                if (cache.events[jp].event.id != event.id) {
+                if (cache.events[tw].event.id != event.id) {
                     Object.keys(guild).forEach(id => {
-                        if (!guild[id].eventChannelJP) return;
-                        var property = guild[id].eventChannelJP;
+                        if (!guild[id].eventChannelTW) return;
+                        var property = guild[id].eventChannelTW;
                         property = property.substring(2, property.length -1);
                         var channel = Kokoro.guilds.get(id).channels.get(property);
-                        channel.send(guild[id].eventMsgJP);
-                        Kokoro.invoke(channel, ["gbp", "event", "jp", "--force"]);
+                        channel.send(guild[id].eventMsgTW);
+                        Kokoro.invoke(channel, ["gbp", "event", "tw", "--force"]);;
                     });
                 }
             })

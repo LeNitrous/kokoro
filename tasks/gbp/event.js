@@ -5,12 +5,15 @@ module.exports = {
     name: "BanG Dream! Event",
     desc: "Get current Girls Band Party event",
     help: 'Get current Girls Band Party event.',
+    args: [
+        {name: "region", desc: "Game region. Choices are: en / jp / kr / tw."}
+    ],
     task: (Kokoro, msg, args) => {
         if (!args[0]) args[0] = "jp";
         var region = args[0].toLowerCase();
         var allowedRegions = ["en", "tw", "kr", "jp"];
         if (!allowedRegions.includes(region)) {
-            return msg.channel.send("Invalid region. Please use `en`, `jp`, `kr`, `tw`.");
+            return msg.channel.send("Invalid region. Please use: `en`, `jp`, `kr`, `tw`.");
         }
         var Bandori = new Api({ region: region });
 

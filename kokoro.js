@@ -42,7 +42,10 @@ Kokoro.on("guildCreate", guild => {
 });
 
 fs.readdirSync("./events/").forEach(file => {
-    Kokoro.loadEvent(require("./events/" + file));
+    var event = require("./events/" + file);
+    event.name = file.split(".")[0];
+    event.event = file.split(".")[0];
+    Kokoro.loadEvent(event);
 });
 
 fs.readdirSync("./jobs/").forEach(file => {
@@ -68,7 +71,7 @@ var settings = {
         eventChannelJP: null,
         eventChannelTW: null,
         eventChannelKR: null,
-        eventMsgEN: "[BanG Dream! JP] **New Event!**",
+        eventMsgEN: "[BanG Dream! EN] **New Event!**",
         eventMsgJP: "[BanG Dream! JP] **New Event!**",
         eventMsgTW: "[BanG Dream! TW] **New Event!**",
         eventMsgKR: "[BanG Dream! KR] **New Event!**",
@@ -90,3 +93,5 @@ var settings = {
         }
     }
 }
+
+Kokoro.defaultSettings = settings;
