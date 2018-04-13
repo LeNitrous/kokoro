@@ -13,7 +13,7 @@ module.exports = {
                 if (cache.events.en === null) {
                     cache.events.en = { event: { id: 0 } };
                 }
-                if (cache.events[en].event.id != event.id) {
+                if (cache.events.en.event.id != event.id) {
                     Object.keys(guild).forEach(id => {
                         if (!guild[id].eventChannelEN) return;
                         var property = guild[id].eventChannelEN;

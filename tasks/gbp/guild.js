@@ -19,14 +19,16 @@ module.exports = {
             msg.channel.send(`Guild Settings for **${msg.guild.name}**\`\`\`${keys}\`\`\``);
         }
         else {
-            if (!guildConf[id].hasOwnProperty(args[0])) return msg.channel.send("That setting is not an option.");
+            var key = args.shift();
+            if (!guildConf[id].hasOwnProperty(key)) return msg.channel.send("That setting is not an option.");
             if (args[1] === undefined) {
-                guildConf[id][args[0]] = Kokoro.defaultSettings.guild[args[0]];
-                msg.channel.send(`Setting \`${args[0]}\` has been reset.`);
+                guildConf[id][key] = Kokoro.defaultSettings.guild[key];
+                msg.channel.send(`Setting \`${key}\` has been reset.`);
             }
             else {
-                guildConf[id][args[0]] = args[1];
-                msg.channel.send(`Set \`${args[0]}\` setting to **${args[1]}**.`);
+                var value = args.join(' ');
+                guildConf[id][key] = value;
+                msg.channel.send(`Set \`${key}\` setting to **${value}**.`);
             }
             Kokoro.settings.set("guild", guildConf);
         }
