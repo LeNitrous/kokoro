@@ -3,8 +3,8 @@ const Api = require("../../mods/node-dori");
 
 module.exports = {
     name: "BanG Dream! Event",
-    desc: "Get current Girls Band Party event",
-    help: 'Get current Girls Band Party event.',
+    desc: "View current Girls Band Party event",
+    help: 'View current Girls Band Party event.',
     args: [
         {name: "region", desc: "Game region. Choices are: en / jp / kr / tw."}
     ],

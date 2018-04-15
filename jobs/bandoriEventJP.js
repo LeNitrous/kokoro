@@ -6,14 +6,14 @@ module.exports = {
     timezone: "Asia/Tokyo",
     task: (Kokoro) => {
         console.log("[Event JP] Checking for new events...");
-        Api.getCurrentEvent()
-            .then(event => {
-                var guild = Kokoro.settings.get("guild");
-                var cache = Kokoro.settings.get("cache");
-                if (cache.events.jp === null) {
-                    cache.events.jp = { event: { id: 0 } };
-                }
-                if (cache.events.jp.event.id != event.id) {
+        if (cache.events.jp === null) {
+            cache.events.jp = { event: { end: 0 } };
+        }
+        if (cache.events.jp.event.end <= new Date().getTime()) {
+            Api.getCurrentEvent()
+                .then(event => {
+                    var guild = Kokoro.settings.get("guild");
+                    var cache = Kokoro.settings.get("cache");
                     Object.keys(guild).forEach(id => {
                         if (!guild[id].eventChannelJP) return;
                         var property = guild[id].eventChannelJP;
@@ -22,10 +22,10 @@ module.exports = {
                         channel.send(guild[id].eventMsgJP);
                         Kokoro.invoke(channel, ["gbp", "event", "jp", "--force"]);
                     });
-                }
-            })
-            .catch(error => {
-                throw new Error(error.stack);
-            });
+                })
+                .catch(error => {
+                    throw new Error(error.stack);
+                });  
+        }
     }
 }
