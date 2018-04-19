@@ -6,6 +6,7 @@ module.exports = {
     timezone: "Asia/Singapore",
     task: (Kokoro) => {
         console.log("[Event EN] Checking for new events...");
+        var cache = Kokoro.settings.get("cache");
         if (cache.events.en === null) {
             cache.events.en = { event: { end: 0 } };
         }
@@ -13,7 +14,6 @@ module.exports = {
             Api.getCurrentEvent()
                 .then(event => {
                     var guild = Kokoro.settings.get("guild");
-                    var cache = Kokoro.settings.get("cache");
                     Object.keys(guild).forEach(id => {
                         if (!guild[id].eventChannelEN) return;
                         var property = guild[id].eventChannelEN;
